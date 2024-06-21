@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">I Want ToDo It</string>
+    <string name="todo_edit">Edit</string>
+    <string name="todo_delete">Delete</string>
+    <string name="todo_edit_save">SAVE</string>
+    <string name="todo_edit_label">What to do?</string>
+    <string name="todo_priority_none">None</string>
+    <string name="todo_priority_high">High</string>
+    <string name="todo_priority_low">low</string>
+    <string name="todo_make_to">Make to</string>
+    <string name="todo_completed">Completed: %d</string>
 </resources>

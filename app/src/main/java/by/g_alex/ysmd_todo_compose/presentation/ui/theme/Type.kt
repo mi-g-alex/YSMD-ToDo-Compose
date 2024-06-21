@@ -1,4 +1,4 @@
-package by.g_alex.ysmd_todo_compose.ui.theme
+package by.g_alex.ysmd_todo_compose.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
