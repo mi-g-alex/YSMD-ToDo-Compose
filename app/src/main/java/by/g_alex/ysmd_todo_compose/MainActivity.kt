@@ -9,7 +9,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import by.g_alex.ysmd_todo_compose.presentation.NavigationScreen
 import by.g_alex.ysmd_todo_compose.presentation.ui.theme.CustomTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

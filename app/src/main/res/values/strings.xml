@@ -6,7 +6,7 @@
     <string name="todo_edit_label">What to do?</string>
     <string name="todo_priority_none">None</string>
     <string name="todo_priority_high">High</string>
-    <string name="todo_priority_low">low</string>
+    <string name="todo_priority_low">Low</string>
     <string name="todo_make_to">Make to</string>
     <string name="todo_completed">Completed: %d</string>
 </resources>

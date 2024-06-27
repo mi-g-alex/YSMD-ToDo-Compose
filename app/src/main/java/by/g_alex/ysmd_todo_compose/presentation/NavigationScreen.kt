@@ -7,15 +7,11 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.NavHostController
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import by.g_alex.ysmd_todo_compose.data.repository.ToDoRepository
 import by.g_alex.ysmd_todo_compose.presentation.todo.create_edit_todo.CreateEditToDoScreen
 import by.g_alex.ysmd_todo_compose.presentation.todo.todo_list.ToDoListScreen
 
@@ -30,8 +26,6 @@ object Routes {
 fun NavigationScreen(
     navController: NavHostController = rememberNavController()
 ) {
-
-    val todoRep = ToDoRepository()
 
     val enter = slideInHorizontally(
         initialOffsetX = { 450 },
@@ -62,9 +56,16 @@ fun NavigationScreen(
             composable(
                 route = Routes.MAIN_SCREEN,
             ) { _ ->
-                ToDoListScreen(todoRep) {
-                    navController.navigate(Routes.EDIT_CREATE_SCREEN.replace("{id}", it.toString()))
-                }
+                ToDoListScreen(
+                    navToEditAdd = {
+                        navController.navigate(
+                            Routes.EDIT_CREATE_SCREEN.replace(
+                                "{id}",
+                                it.toString()
+                            )
+                        )
+                    }
+                )
             }
 
             composable(
@@ -73,7 +74,7 @@ fun NavigationScreen(
                 exitTransition = { out }
             ) { entry ->
                 val id = entry.arguments?.getString("id")
-                CreateEditToDoScreen(id, todoRep) { navController.popBackStack() }
+                CreateEditToDoScreen(id, { navController.popBackStack() })
             }
         }
     }
