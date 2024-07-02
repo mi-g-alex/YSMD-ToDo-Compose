@@ -16,9 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import by.g_alex.ysmd_todo_compose.R
-import by.g_alex.ysmd_todo_compose.presentation.ui.theme.CustomTheme
+import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
 
 @Composable
 fun DeleteToDo(
@@ -28,16 +27,16 @@ fun DeleteToDo(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(CustomTheme.colors.backPrimary)
-            .padding(vertical = 8.dp),
+            .background(ToDoTheme.colors.backPrimary)
+            .padding(vertical = ToDoTheme.dp.listVerticalPadding),
         horizontalArrangement = Arrangement.End
     ) {
         TextButton(
             onClick = { onDelete() },
             enabled = enabled,
             colors = ButtonDefaults.textButtonColors().copy(
-                contentColor = CustomTheme.colors.colorRed,
-                disabledContentColor = CustomTheme.colors.labelDisable
+                contentColor = ToDoTheme.colors.colorRed,
+                disabledContentColor = ToDoTheme.colors.labelDisable
             )
         ) {
             Icon(Icons.Filled.Delete, null)
@@ -49,32 +48,32 @@ fun DeleteToDo(
 
 @Composable
 @Preview(name = "Delete | Light | Can't delete")
-fun DeleteToDoPreviewLight() {
-    CustomTheme {
+private fun DeleteToDoPreviewLight() {
+    ToDoTheme {
         DeleteToDo(false) {}
     }
 }
 
 @Composable
 @Preview(name = "Delete | Dark | Can't delete", uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun DeleteToDoPreviewDark() {
-    CustomTheme {
+private fun DeleteToDoPreviewDark() {
+    ToDoTheme {
         DeleteToDo(false) {}
     }
 }
 
 @Composable
 @Preview(name = "Delete | Light | Can delete")
-fun DeleteToDoPreviewLightCanSave() {
-    CustomTheme {
+private fun DeleteToDoPreviewLightCanSave() {
+    ToDoTheme {
         DeleteToDo(true) {}
     }
 }
 
 @Composable
 @Preview(name = "Delete | Dark | Can delete", uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun DeleteToDoPreviewDarkCanSave() {
-    CustomTheme {
+private fun DeleteToDoPreviewDarkCanSave() {
+    ToDoTheme {
         DeleteToDo(true) {}
     }
 }

@@ -8,11 +8,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import by.g_alex.ysmd_todo_compose.R
 import by.g_alex.ysmd_todo_compose.data.additional.enums.ToDoPriority
 import by.g_alex.ysmd_todo_compose.presentation.todo.components.IconBeforeText
-import by.g_alex.ysmd_todo_compose.presentation.ui.theme.CustomTheme
+import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
 
 @Composable
 fun PriorityDropDownMenu(
@@ -23,38 +24,41 @@ fun PriorityDropDownMenu(
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = { onDismiss() },
-        modifier = Modifier.background(CustomTheme.colors.backElevated)
+        modifier = Modifier.background(ToDoTheme.colors.backElevated)
     ) {
         DropdownMenuItem(
             text = {
                 Text(
                     stringResource(R.string.todo_priority_none),
-                    color = CustomTheme.colors.labelPrimary
+                    color = ToDoTheme.colors.labelPrimary,
+                    style = ToDoTheme.typography.support
                 )
             },
             onClick = { onSelect(ToDoPriority.NONE) },
-            modifier = Modifier.background(CustomTheme.colors.backElevated),
+            modifier = Modifier.background(ToDoTheme.colors.backElevated),
         )
         DropdownMenuItem(
             text = {
                 Text(
                     stringResource(R.string.todo_priority_high),
-                    color = CustomTheme.colors.colorRed
+                    color = ToDoTheme.colors.colorRed,
+                    style = ToDoTheme.typography.support
                 )
             },
             onClick = { onSelect(ToDoPriority.HIGH) },
-            modifier = Modifier.background(CustomTheme.colors.backElevated),
+            modifier = Modifier.background(ToDoTheme.colors.backElevated),
             leadingIcon = { IconBeforeText(ToDoPriority.HIGH) }
         )
         DropdownMenuItem(
             text = {
                 Text(
                     stringResource(R.string.todo_priority_low),
-                    color = CustomTheme.colors.labelPrimary
+                    color = ToDoTheme.colors.labelPrimary,
+                    style = ToDoTheme.typography.support
                 )
             },
             onClick = { onSelect(ToDoPriority.LOW) },
-            modifier = Modifier.background(CustomTheme.colors.backElevated),
+            modifier = Modifier.background(ToDoTheme.colors.backElevated),
             leadingIcon = { IconBeforeText(ToDoPriority.LOW) },
         )
     }
@@ -62,18 +66,18 @@ fun PriorityDropDownMenu(
 
 @Composable
 @Preview(name = "Priority DropDown Menu | Light")
-fun PriorityDropDownMenuPreviewLight() {
-    // Работает ток в интерактивном моде)
-    CustomTheme {
+private fun PriorityDropDownMenuPreviewLight() {
+    // Work only on Interactive mode of preview
+    ToDoTheme {
         PriorityDropDownMenu(true, {}) {}
     }
 }
 
 @Composable
 @Preview(name = "Priority DropDown Menu | Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun PriorityDropDownMenuPreviewDark() {
-    // Работает ток в интерактивном моде)
-    CustomTheme {
+private fun PriorityDropDownMenuPreviewDark() {
+    // Work only on Interactive mode of preview
+    ToDoTheme {
         PriorityDropDownMenu(true, {}) {}
     }
 }

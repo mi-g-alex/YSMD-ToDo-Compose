@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import by.g_alex.ysmd_todo_compose.R
-import by.g_alex.ysmd_todo_compose.presentation.ui.theme.CustomTheme
+import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,14 +30,14 @@ fun ToDoListScreenTopBar(
     onShowClicked: () -> Unit,
     cnt: Int
 ) {
-    // Тут что-то типо анимации для elevation
+    // Something like animation for elevation
     Surface(shadowElevation = (scrollBehavior.state.collapsedFraction * 40).dp) {
         LargeTopAppBar(
             colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = CustomTheme.colors.backPrimary,
-                titleContentColor = CustomTheme.colors.labelPrimary,
-                scrolledContainerColor = CustomTheme.colors.backPrimary,
-                actionIconContentColor = CustomTheme.colors.colorBlue
+                containerColor = ToDoTheme.colors.backPrimary,
+                titleContentColor = ToDoTheme.colors.labelPrimary,
+                scrolledContainerColor = ToDoTheme.colors.backPrimary,
+                actionIconContentColor = ToDoTheme.colors.colorBlue
             ),
             title = {
                 Column {
@@ -49,8 +49,8 @@ fun ToDoListScreenTopBar(
                     AnimatedVisibility(scrollBehavior.state.heightOffset == 0f) {
                         Text(
                             text = stringResource(R.string.todo_completed, cnt),
-                            color = CustomTheme.colors.labelSecondary,
-                            fontSize = 20.sp
+                            color = ToDoTheme.colors.labelSecondary,
+                            style = ToDoTheme.typography.subTitle
                         )
                     }
                 }
@@ -71,8 +71,8 @@ fun ToDoListScreenTopBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview(name = "ToDoList Top Bar")
-fun ToDoTopBarPreview() {
-    CustomTheme {
+private fun ToDoTopBarPreview() {
+    ToDoTheme {
         val t = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
         ToDoListScreenTopBar(t, false, {}, 0)
     }
@@ -81,8 +81,8 @@ fun ToDoTopBarPreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview(name = "ToDoList Top Bar", uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun ToDoTopBarPreviewDark() {
-    CustomTheme {
+private fun ToDoTopBarPreviewDark() {
+    ToDoTheme {
         val t = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
         ToDoListScreenTopBar(t, true, {}, 0)
     }

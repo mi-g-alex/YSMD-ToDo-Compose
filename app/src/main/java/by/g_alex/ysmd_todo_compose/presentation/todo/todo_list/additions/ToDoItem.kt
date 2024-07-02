@@ -1,14 +1,11 @@
-package by.g_alex.ysmd_todo_compose.presentation.todo.components
+package by.g_alex.ysmd_todo_compose.presentation.todo.todo_list.additions
 
 import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -17,37 +14,27 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import by.g_alex.ysmd_todo_compose.R
 import by.g_alex.ysmd_todo_compose.data.additional.enums.ToDoPriority
 import by.g_alex.ysmd_todo_compose.data.model.ToDoItemModel
-import by.g_alex.ysmd_todo_compose.presentation.ui.theme.CustomColors
-import by.g_alex.ysmd_todo_compose.presentation.ui.theme.CustomTheme
-import java.text.SimpleDateFormat
+import by.g_alex.ysmd_todo_compose.presentation.todo.components.IconBeforeText
+import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
+import by.g_alex.ysmd_todo_compose.presentation.utils.dateToString
 import java.util.Date
-import java.util.Locale
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -62,17 +49,18 @@ fun ToDoItem(
 
     val checkBoxColor = if (item.priority == ToDoPriority.HIGH) {
         CheckboxDefaults.colors().copy(
-            checkedBorderColor = CustomTheme.colors.colorGreen,
-            checkedBoxColor = CustomTheme.colors.colorGreen,
-            uncheckedBoxColor = CustomTheme.colors.colorRed.copy(alpha = 0.16f),
-            uncheckedBorderColor = CustomTheme.colors.colorRed
+            checkedBorderColor = ToDoTheme.colors.colorGreen,
+            checkedBoxColor = ToDoTheme.colors.colorGreen,
+            uncheckedBoxColor = ToDoTheme.colors.colorRed.copy(alpha = 0.16f),
+            uncheckedBorderColor = ToDoTheme.colors.colorRed
         )
     } else {
         CheckboxDefaults.colors().copy(
-            checkedBorderColor = CustomTheme.colors.colorGreen,
-            checkedBoxColor = CustomTheme.colors.colorGreen
+            checkedBorderColor = ToDoTheme.colors.colorGreen,
+            checkedBoxColor = ToDoTheme.colors.colorGreen
         )
     }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -82,12 +70,12 @@ fun ToDoItem(
             ),
         shape = RectangleShape,
         colors = CardDefaults.cardColors()
-            .copy(containerColor = CustomTheme.colors.backSecondary)
+            .copy(containerColor = ToDoTheme.colors.backSecondary)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(5.dp),
+                .padding(ToDoTheme.dp.listContentPadding),
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -99,7 +87,10 @@ fun ToDoItem(
                 colors = checkBoxColor
             )
 
-            IconBeforeText(priority = item.priority, modifier = Modifier.padding(end = 4.dp))
+            IconBeforeText(
+                priority = item.priority,
+                modifier = Modifier.padding(end = ToDoTheme.dp.iconPadding)
+            )
 
             Column(
                 Modifier
@@ -113,26 +104,25 @@ fun ToDoItem(
                     fontSize = 16.sp,
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis,
-                    color = CustomTheme.colors.labelPrimary,
-                    style = if (item.completed) TextStyle(textDecoration = TextDecoration.LineThrough) else TextStyle()
+                    color = ToDoTheme.colors.labelPrimary,
+                    style = ToDoTheme.typography.body.copy(textDecoration = if (item.completed) TextDecoration.LineThrough else null)
                 )
 
                 if (item.deadline != null) {
                     Text(
-                        text = SimpleDateFormat(
-                            "dd.MM.yyyy",
-                            Locale.getDefault()
-                        ).format(item.deadline),
-                        color = CustomTheme.colors.labelTertiary
+                        text = dateToString(item.deadline),
+                        color = ToDoTheme.colors.labelTertiary,
+                        style = ToDoTheme.typography.support
                     )
                 }
 
             }
+
             Icon(
                 Icons.Outlined.Info,
                 null,
-                tint = CustomTheme.colors.colorGray,
-                modifier = Modifier.padding(start = 4.dp)
+                tint = ToDoTheme.colors.colorGray,
+                modifier = Modifier.padding(start = ToDoTheme.dp.iconPadding)
             )
 
         }
@@ -144,39 +134,12 @@ fun ToDoItem(
         ) { onDelete(); showMenu = false }
 
     }
-
-
-}
-
-@Composable
-private fun DropDownMenu(
-    expanded: Boolean,
-    onDismiss: () -> Unit,
-    onEdit: () -> Unit,
-    onDelete: () -> Unit
-) {
-    DropdownMenu(
-        expanded = expanded,
-        onDismissRequest = { onDismiss() },
-        modifier = Modifier.background(CustomTheme.colors.backElevated)
-    ) {
-        DropdownMenuItem(
-            text = { Text(stringResource(R.string.todo_edit), color = CustomTheme.colors.labelPrimary) },
-            onClick = { onEdit() },
-            modifier = Modifier.background(CustomTheme.colors.backElevated),
-        )
-        DropdownMenuItem(
-            text = { Text(stringResource(R.string.todo_delete), color = CustomTheme.colors.colorRed) },
-            onClick = { onDelete() },
-            modifier = Modifier.background(CustomTheme.colors.backElevated),
-        )
-    }
 }
 
 @Preview
 @Composable
-fun ToDoItemBasic() {
-    CustomTheme {
+private fun ToDoItemBasic() {
+    ToDoTheme {
         ToDoItem(
             ToDoItemModel(
                 id = "1",
@@ -195,8 +158,8 @@ fun ToDoItemBasic() {
 
 @Preview
 @Composable
-fun ToDoItemHighPriority() {
-    CustomTheme {
+private fun ToDoItemHighPriority() {
+    ToDoTheme {
         ToDoItem(
             ToDoItemModel(
                 id = "2",
@@ -215,8 +178,8 @@ fun ToDoItemHighPriority() {
 
 @Preview
 @Composable
-fun ToDoItemWithDeadline() {
-    CustomTheme {
+private fun ToDoItemWithDeadline() {
+    ToDoTheme {
         ToDoItem(
             ToDoItemModel(
                 id = "1",
@@ -235,8 +198,8 @@ fun ToDoItemWithDeadline() {
 
 @Preview
 @Composable
-fun ToDoItemLowPriority() {
-    CustomTheme {
+private fun ToDoItemLowPriority() {
+    ToDoTheme {
         ToDoItem(
             ToDoItemModel(
                 id = "3",
@@ -255,8 +218,8 @@ fun ToDoItemLowPriority() {
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun ToDoItemLotText() {
-    CustomTheme {
+private fun ToDoItemLotText() {
+    ToDoTheme {
         ToDoItem(
             ToDoItemModel(
                 id = "4",

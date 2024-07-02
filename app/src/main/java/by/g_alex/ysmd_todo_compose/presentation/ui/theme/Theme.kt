@@ -6,10 +6,8 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -17,61 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
-private val DarkColorScheme = darkColorScheme(
-    primary = BackDarkPrimary,
-    secondary = BackDarkSecondary,
-    tertiary = BackDarkElevated,
-    onPrimary = White,
-    onSecondary = White99,
-    onTertiary = White66,
-)
-
-private val LightColorScheme = lightColorScheme(
-    primary = BackLightPrimary,
-    secondary = White,
-    tertiary = White,
-    onPrimary = Black,
-    onSecondary = Black99,
-    onTertiary = Black4D,
-    background = White
-)
-
-val LocalCustomColors = staticCompositionLocalOf {
-    CustomColors(
-        supportSeparator = Color.Unspecified,
-        supportOverlay = Color.Unspecified,
-        labelPrimary = Color.Unspecified,
-        labelSecondary = Color.Unspecified,
-        labelTertiary = Color.Unspecified,
-        labelDisable = Color.Unspecified,
-        colorRed = Color.Unspecified,
-        colorGreen = Color.Unspecified,
-        colorBlue = Color.Unspecified,
-        colorGray = Color.Unspecified,
-        colorGrayLight = Color.Unspecified,
-        backPrimary = Color.Unspecified,
-        backSecondary = Color.Unspecified,
-        backElevated = Color.Unspecified,
-    )
-}
-
-@Composable
-fun YSMDToDoComposeTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
-) {
-    val colorScheme = when {
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
-    }
-
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
-}
 
 val lightColors = CustomColors(
     supportSeparator = Black33,
@@ -107,9 +50,9 @@ val darkColors = CustomColors(
     backElevated = BackDarkElevated
 )
 
-// Кастомная тема с поддержкой светлой или тёмной темы
+// Custom theme with light and dark mode support
 @Composable
-fun CustomTheme(
+fun ToDoTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
@@ -119,96 +62,108 @@ fun CustomTheme(
         else -> lightColors
     }
 
+    val typography = LocalCustomTypography.current
+
+    val dp = LocalCustomDp.current
+
     CompositionLocalProvider(
         LocalCustomColors provides colors,
+        LocalCustomTypography provides typography,
+        LocalCustomDp provides dp,
         content = content
     )
 }
 
-object CustomTheme {
+object ToDoTheme {
     val colors: CustomColors
         @Composable
         get() = LocalCustomColors.current
+    val typography: CustomTypography
+        @Composable
+        get() = LocalCustomTypography.current
+    val dp: CustomDp
+        @Composable
+        get() = LocalCustomDp.current
 }
 
 @Composable
-fun ThemePreviewFun() {
+private fun ThemePreviewFun() {
     Column {
         Text(
             "supportSeparator",
             modifier = Modifier
                 .fillMaxWidth()
-                .background(CustomTheme.colors.supportSeparator)
+                .background(ToDoTheme.colors.supportSeparator)
                 .padding(8.dp)
         )
         Text(
             "supportOverlay",
             modifier = Modifier
                 .fillMaxWidth()
-                .background(CustomTheme.colors.supportOverlay)
+                .background(ToDoTheme.colors.supportOverlay)
                 .padding(8.dp)
         )
         Text(
             "labelPrimary",
             modifier = Modifier
                 .fillMaxWidth()
-                .background(CustomTheme.colors.labelPrimary)
+                .background(ToDoTheme.colors.labelPrimary)
                 .padding(8.dp),
-            color = CustomTheme.colors.backPrimary
+            color = ToDoTheme.colors.backPrimary
         )
         Text(
             "labelSecondary",
             modifier = Modifier
                 .fillMaxWidth()
-                .background(CustomTheme.colors.labelSecondary)
+                .background(ToDoTheme.colors.labelSecondary)
                 .padding(8.dp)
         )
         Text(
             "labelTertiary",
             modifier = Modifier
                 .fillMaxWidth()
-                .background(CustomTheme.colors.labelTertiary)
+                .background(ToDoTheme.colors.labelTertiary)
                 .padding(8.dp)
         )
         Text(
             "labelDisable",
             modifier = Modifier
                 .fillMaxWidth()
-                .background(CustomTheme.colors.labelDisable)
+                .background(ToDoTheme.colors.labelDisable)
                 .padding(8.dp)
         )
         Text(
             "colorRed", modifier = Modifier
                 .fillMaxWidth()
-                .background(CustomTheme.colors.colorRed)
+                .background(ToDoTheme.colors.colorRed)
                 .padding(8.dp)
         )
         Text(
             "colorGreen",
             modifier = Modifier
                 .fillMaxWidth()
-                .background(CustomTheme.colors.colorGreen)
+                .background(ToDoTheme.colors.colorGreen)
                 .padding(8.dp)
         )
         Text(
             "colorBlue",
             modifier = Modifier
                 .fillMaxWidth()
-                .background(CustomTheme.colors.colorBlue)
+                .background(ToDoTheme.colors.colorBlue)
                 .padding(8.dp)
         )
         Text(
             "colorGray",
             modifier = Modifier
                 .fillMaxWidth()
-                .background(CustomTheme.colors.colorGray)
+                .background(ToDoTheme.colors.colorGray)
                 .padding(8.dp)
         )
         Text(
             "colorGray",
             modifier = Modifier
                 .fillMaxWidth()
-                .background(CustomTheme.colors.colorGrayLight)
+                .background(ToDoTheme.colors.colorGrayLight)
                 .padding(8.dp)
         )
         Text(
@@ -221,25 +176,25 @@ fun ThemePreviewFun() {
             "backPrimary",
             modifier = Modifier
                 .fillMaxWidth()
-                .background(CustomTheme.colors.backPrimary)
+                .background(ToDoTheme.colors.backPrimary)
                 .padding(8.dp),
-            color = CustomTheme.colors.labelPrimary
+            color = ToDoTheme.colors.labelPrimary
         )
         Text(
             "backSecondary",
             modifier = Modifier
                 .fillMaxWidth()
-                .background(CustomTheme.colors.backSecondary)
+                .background(ToDoTheme.colors.backSecondary)
                 .padding(8.dp),
-            color = CustomTheme.colors.labelPrimary
+            color = ToDoTheme.colors.labelPrimary
         )
         Text(
             "backElevated",
             modifier = Modifier
                 .fillMaxWidth()
-                .background(CustomTheme.colors.backElevated)
+                .background(ToDoTheme.colors.backElevated)
                 .padding(8.dp),
-            color = CustomTheme.colors.labelPrimary
+            color = ToDoTheme.colors.labelPrimary
         )
     }
 }
@@ -247,16 +202,16 @@ fun ThemePreviewFun() {
 
 @Composable
 @Preview(name = "Light Theme Colors")
-fun ThemePreview() {
-    CustomTheme {
+private fun ThemePreview() {
+    ToDoTheme {
         ThemePreviewFun()
     }
 }
 
 @Composable
 @Preview(name = "Dark Theme Colors", uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun ThemePreviewDark() {
-    CustomTheme {
+private fun ThemePreviewDark() {
+    ToDoTheme {
         ThemePreviewFun()
     }
 }

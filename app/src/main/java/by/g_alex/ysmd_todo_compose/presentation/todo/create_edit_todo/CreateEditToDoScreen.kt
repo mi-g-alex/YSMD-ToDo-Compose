@@ -2,7 +2,6 @@ package by.g_alex.ysmd_todo_compose.presentation.todo.create_edit_todo
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -20,28 +18,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import by.g_alex.ysmd_todo_compose.data.additional.enums.ToDoPriority
 import by.g_alex.ysmd_todo_compose.presentation.todo.create_edit_todo.additions.CreateEditTextField
 import by.g_alex.ysmd_todo_compose.presentation.todo.create_edit_todo.additions.CreateEditTopAppBar
 import by.g_alex.ysmd_todo_compose.presentation.todo.create_edit_todo.additions.DeadlinePicker
 import by.g_alex.ysmd_todo_compose.presentation.todo.create_edit_todo.additions.DeleteToDo
 import by.g_alex.ysmd_todo_compose.presentation.todo.create_edit_todo.additions.PrioritySelector
-import by.g_alex.ysmd_todo_compose.presentation.ui.theme.CustomTheme
+import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
 import java.util.Calendar
 import java.util.Date
 
 @Composable
 fun CreateEditToDoScreen(
-    id: String?,
     goBack: () -> Unit,
-    viewModel: CreateEditToDoViewModel = hiltViewModel()
+    viewModel: CreateEditToDoViewModel
 ) {
-
-    LaunchedEffect(Unit) {
-        viewModel.getElementById(id)
-    }
 
     val state = viewModel.state.collectAsState()
 
@@ -73,10 +64,6 @@ private fun CreateEditContent(
 
     var selectedPriority by remember { mSelectedPriority }
 
-//    LaunchedEffect(selectedDeadline) {
-//        Log.d("DATE", "Selected: $selectedDeadline")
-//    }
-
     Scaffold(
         topBar = {
             CreateEditTopAppBar(
@@ -88,17 +75,17 @@ private fun CreateEditContent(
                 enabledSave = toDoText.isNotBlank()
             )
         },
-        modifier = Modifier.background(CustomTheme.colors.backPrimary)
+        modifier = Modifier.background(ToDoTheme.colors.backPrimary)
     ) { pad ->
 
         LazyColumn(
             modifier = Modifier
                 .padding(pad)
                 .fillMaxSize()
-                .background(CustomTheme.colors.backPrimary)
-                .padding(horizontal = 8.dp),
+                .background(ToDoTheme.colors.backPrimary)
+                .padding(horizontal = ToDoTheme.dp.listHorizontalPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
-            contentPadding = PaddingValues(vertical = 4.dp)
+            contentPadding = PaddingValues(vertical = ToDoTheme.dp.listContentPadding)
         ) {
 
             item {
@@ -130,8 +117,8 @@ private fun CreateEditContent(
 @SuppressLint("UnrememberedMutableState")
 @Composable
 @Preview(name = "New | Light theme")
-fun PreviewCreate() {
-    CustomTheme {
+private fun PreviewCreate() {
+    ToDoTheme {
         CreateEditContent(
             false,
             mutableStateOf(""),
@@ -145,8 +132,8 @@ fun PreviewCreate() {
 @SuppressLint("UnrememberedMutableState")
 @Composable
 @Preview(name = "New | Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun PreviewCreateNight() {
-    CustomTheme {
+private fun PreviewCreateNight() {
+    ToDoTheme {
         CreateEditContent(
             false,
             mutableStateOf(""),
@@ -160,8 +147,8 @@ fun PreviewCreateNight() {
 @SuppressLint("UnrememberedMutableState")
 @Composable
 @Preview(name = "Edit | Light")
-fun PreviewEditLight() {
-    CustomTheme {
+private fun PreviewEditLight() {
+    ToDoTheme {
         CreateEditContent(
             true,
             mutableStateOf("Hello"),
@@ -175,8 +162,8 @@ fun PreviewEditLight() {
 @SuppressLint("UnrememberedMutableState")
 @Composable
 @Preview(name = "Edit | Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun PreviewEditNight() {
-    CustomTheme {
+private fun PreviewEditNight() {
+    ToDoTheme {
         CreateEditContent(
             true,
             mutableStateOf("Hello"),
