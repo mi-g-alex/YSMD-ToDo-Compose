@@ -14,9 +14,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.UiMode
 import by.g_alex.ysmd_todo_compose.R
-import by.g_alex.ysmd_todo_compose.presentation.ui.theme.CustomTheme
+import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,7 +31,7 @@ fun CreateEditTopAppBar(
                 Icon(
                     Icons.Outlined.Close,
                     null,
-                    tint = CustomTheme.colors.labelPrimary
+                    tint = ToDoTheme.colors.labelPrimary
                 )
             }
         },
@@ -43,50 +42,53 @@ fun CreateEditTopAppBar(
                 },
                 enabled = enabledSave,
                 colors = ButtonDefaults.textButtonColors().copy(
-                    contentColor = CustomTheme.colors.colorBlue,
-                    disabledContentColor = CustomTheme.colors.colorBlue.copy(alpha = 0.6f),
+                    contentColor = ToDoTheme.colors.colorBlue,
+                    disabledContentColor = ToDoTheme.colors.colorBlue.copy(alpha = 0.6f),
                 )
             ) {
-                Text(stringResource(R.string.todo_edit_save))
+                Text(
+                    text = stringResource(R.string.todo_edit_save),
+                    style = ToDoTheme.typography.topBarButton
+                )
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = CustomTheme.colors.backPrimary,
-            titleContentColor = CustomTheme.colors.labelPrimary,
-            scrolledContainerColor = CustomTheme.colors.backPrimary,
-            actionIconContentColor = CustomTheme.colors.colorBlue,
+            containerColor = ToDoTheme.colors.backPrimary,
+            titleContentColor = ToDoTheme.colors.labelPrimary,
+            scrolledContainerColor = ToDoTheme.colors.backPrimary,
+            actionIconContentColor = ToDoTheme.colors.colorBlue,
         ),
     )
 }
 
 @Composable
 @Preview(name = "Edit Top Bar | Light | Can't save")
-fun CreateEditTopAppBarPreviewLight() {
-    CustomTheme {
+private fun CreateEditTopAppBarPreviewLight() {
+    ToDoTheme {
         CreateEditTopAppBar({}, {}, false)
     }
 }
 
 @Composable
 @Preview(name = "Edit Top Bar | Dark | Can't save", uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun CreateEditTopAppBarPreviewDark() {
-    CustomTheme {
+private fun CreateEditTopAppBarPreviewDark() {
+    ToDoTheme {
         CreateEditTopAppBar({}, {}, false)
     }
 }
 
 @Composable
 @Preview(name = "Edit Top Bar | Light | Can save")
-fun CreateEditTopAppBarPreviewLightCanSave() {
-    CustomTheme {
+private fun CreateEditTopAppBarPreviewLightCanSave() {
+    ToDoTheme {
         CreateEditTopAppBar({}, {}, true)
     }
 }
 
 @Composable
 @Preview(name = "Edit Top Bar | Dark | Can save", uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun CreateEditTopAppBarPreviewDarkCanSave() {
-    CustomTheme {
+private fun CreateEditTopAppBarPreviewDarkCanSave() {
+    ToDoTheme {
         CreateEditTopAppBar({}, {}, true)
     }
 }

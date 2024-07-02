@@ -3,11 +3,10 @@ package by.g_alex.ysmd_todo_compose.presentation.todo.components
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import by.g_alex.ysmd_todo_compose.R
 import by.g_alex.ysmd_todo_compose.data.additional.enums.ToDoPriority
-import by.g_alex.ysmd_todo_compose.presentation.ui.theme.CustomTheme
+import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
 
 @Composable
 fun IconBeforeText(priority: ToDoPriority, modifier: Modifier = Modifier) {
@@ -15,7 +14,7 @@ fun IconBeforeText(priority: ToDoPriority, modifier: Modifier = Modifier) {
         Icon(
             painterResource(R.drawable.icon_todo_important),
             null,
-            tint = CustomTheme.colors.colorRed,
+            tint = ToDoTheme.colors.colorRed,
             modifier = modifier
         )
     }
@@ -24,7 +23,7 @@ fun IconBeforeText(priority: ToDoPriority, modifier: Modifier = Modifier) {
         Icon(
             painterResource(R.drawable.icon_todo_low),
             contentDescription = null,
-            tint = CustomTheme.colors.colorGray,
+            tint = ToDoTheme.colors.colorGray,
             modifier = modifier
         )
     }

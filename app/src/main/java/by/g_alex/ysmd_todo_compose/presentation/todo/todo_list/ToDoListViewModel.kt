@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,42 +24,80 @@ class ToDoListViewModel @Inject constructor(
 
     fun getAllToDos() {
         toDoRepository.getAllToDo().onEach { res ->
-
             when (res) {
                 is Resource.Success -> {
-                    _state.value =
+                    _state.update {
                         _state.value.copy(
                             isLoading = false,
                             listOfToDo = res.data ?: emptyList(),
                             isError = null
                         )
+                    }
                 }
+
                 is Resource.Loading -> {
-                    _state.value = _state.value.copy(isLoading = true)
+                    _state.update { _state.value.copy(isLoading = true) }
                 }
+
                 is Resource.Error -> {
-                    _state.value = _state.value.copy(isLoading = false, isError = res.message)
+                    _state.update { _state.value.copy(isLoading = false, isError = res.message) }
                 }
             }
-
         }.launchIn(viewModelScope)
 
         viewModelScope.launch {
             val cnt = toDoRepository.countOfCompleted()
-            _state.value = _state.value.copy(cnt = cnt)
+            _state.update { _state.value.copy(cnt = cnt) }
         }
     }
 
     fun completeToDo(completed: Boolean, item: ToDoItemModel) {
-        viewModelScope.launch {
-            toDoRepository.addOrEditToDo(item.copy(completed = completed))
-            getAllToDos()
-        }
+        toDoRepository.addOrEditToDo(item.copy(completed = completed)).onEach { res ->
+            when (res) {
+                is Resource.Success -> {
+                    _state.update {
+                        _state.value.copy(
+                            isLoading = false,
+                            isError = null
+                        )
+                    }
+                }
+
+                is Resource.Loading -> {
+                    _state.update { _state.value.copy(isLoading = true) }
+                }
+
+                is Resource.Error -> {
+                    _state.update { _state.value.copy(isLoading = false, isError = res.message) }
+                }
+            }
+        }.launchIn(viewModelScope)
+        getAllToDos()
     }
 
     fun deleteToDo(item: ToDoItemModel) {
+        toDoRepository.deleteToDo(item = item).onEach { res ->
+            when (res) {
+                is Resource.Success -> {
+                    _state.update {
+                        _state.value.copy(
+                            isLoading = false,
+                            isError = null
+                        )
+                    }
+                }
+
+                is Resource.Loading -> {
+                    _state.update { _state.value.copy(isLoading = true) }
+                }
+
+                is Resource.Error -> {
+                    _state.update { _state.value.copy(isLoading = false, isError = res.message) }
+                }
+            }
+        }.launchIn(viewModelScope)
+
         viewModelScope.launch {
-            toDoRepository.deleteToDo(item = item);
             getAllToDos()
         }
     }

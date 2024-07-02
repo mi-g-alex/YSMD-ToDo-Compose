@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import by.g_alex.ysmd_todo_compose.R
 import by.g_alex.ysmd_todo_compose.data.additional.enums.ToDoPriority
 import by.g_alex.ysmd_todo_compose.presentation.todo.components.IconBeforeText
-import by.g_alex.ysmd_todo_compose.presentation.ui.theme.CustomTheme
+import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
 
 @Composable
 fun PrioritySelector(
@@ -43,33 +43,51 @@ fun PrioritySelector(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(CustomTheme.colors.backPrimary)
-            .padding(vertical = 8.dp)
+            .background(ToDoTheme.colors.backPrimary)
+            .padding(vertical = ToDoTheme.dp.listVerticalPadding)
             .clickable { expanded = true }
     ) {
-        Text(text = "Priority", color = CustomTheme.colors.labelPrimary, fontSize = 16.sp)
+        Text(
+            text = "Priority",
+            style = ToDoTheme.typography.body,
+            color = ToDoTheme.colors.labelPrimary,
+        )
+
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            IconBeforeText(priority, Modifier.size(14.dp))
-            Text(text = priorityText, color = CustomTheme.colors.labelSecondary, fontSize = 14.sp)
+
+            IconBeforeText(
+                priority = priority,
+                // TODO: Here need fix static dp bcs it should be like font
+                modifier = Modifier.size(ToDoTheme.typography.support.fontSize.value.dp)
+            )
+
+            Text(
+                text = priorityText,
+                color = ToDoTheme.colors.labelSecondary,
+                fontSize = 14.sp
+            )
         }
-        PriorityDropDownMenu(expanded, { expanded = false }) { selectPriority(it); expanded = false }
+
+        PriorityDropDownMenu(expanded, { expanded = false }) {
+            selectPriority(it); expanded = false
+        }
     }
-    
+
     HorizontalDivider(modifier = Modifier.fillMaxWidth())
 }
 
 @Composable
 @Preview(name = "Priority Selector | Light")
-fun PrioritySelectorPreviewLight() {
-    CustomTheme {
+private fun PrioritySelectorPreviewLight() {
+    ToDoTheme {
         PrioritySelector(ToDoPriority.HIGH) {}
     }
 }
 
 @Composable
 @Preview(name = "Priority Selector | Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun PrioritySelectorPreviewDark() {
-    CustomTheme {
+private fun PrioritySelectorPreviewDark() {
+    ToDoTheme {
         PrioritySelector(ToDoPriority.HIGH) {}
     }
 }

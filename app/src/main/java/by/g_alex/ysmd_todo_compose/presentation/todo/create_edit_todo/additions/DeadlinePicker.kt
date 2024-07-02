@@ -2,7 +2,6 @@ package by.g_alex.ysmd_todo_compose.presentation.todo.create_edit_todo.additions
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,11 +32,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import by.g_alex.ysmd_todo_compose.R
-import by.g_alex.ysmd_todo_compose.presentation.ui.theme.CustomTheme
-import java.text.SimpleDateFormat
+import by.g_alex.ysmd_todo_compose.common.Constants.DATE_PICKER_DEFAULT_RANGE
+import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
+import by.g_alex.ysmd_todo_compose.presentation.utils.dateToString
 import java.util.Calendar
 import java.util.Date
 import java.util.GregorianCalendar
@@ -50,13 +48,13 @@ fun DeadlinePicker(
     selectDate: (it: Date?) -> Unit
 ) {
 
-    val getTime: (date: Date) -> String = { it ->
-        SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(it)
-    }
-
     var date by remember { selectedDate }
 
-    var dateText by remember { mutableStateOf(date?.let { getTime(it) } ?: "") }
+    var dateText by remember {
+        mutableStateOf(date?.let { d ->
+            dateToString(d)
+        } ?: "")
+    }
 
     val cal = Calendar.getInstance().apply {
         GregorianCalendar(
@@ -69,8 +67,8 @@ fun DeadlinePicker(
 
     val datePickerState = remember {
         DatePickerState(
-            yearRange = ((cal.get(GregorianCalendar.YEAR) - 10)..
-                    (cal.get(GregorianCalendar.YEAR) + 10)),
+            yearRange = ((cal.get(GregorianCalendar.YEAR) - DATE_PICKER_DEFAULT_RANGE)..
+                    (cal.get(GregorianCalendar.YEAR) + DATE_PICKER_DEFAULT_RANGE)),
             initialDisplayedMonthMillis = selectedDate.value?.time ?: cal.timeInMillis,
             initialDisplayMode = DisplayMode.Picker,
             initialSelectedDateMillis = selectedDate.value?.time ?: cal.timeInMillis,
@@ -83,7 +81,7 @@ fun DeadlinePicker(
     var checked by rememberSaveable { mutableStateOf(selectedDate.value != null) }
 
     LaunchedEffect(date) {
-        dateText = if (date != null) getTime(date!!) else ""
+        dateText = if (date != null) dateToString(date!!) else ""
         selectDate(date)
         checked = date != null
     }
@@ -94,29 +92,29 @@ fun DeadlinePicker(
             date = Calendar.getInstance().time
             calIsView = true
         }
-        if(!checked) date = null
+        if (!checked) date = null
     }
 
     Row(
         Modifier
             .fillMaxWidth()
-            .clickable { if (!checked) checked = true;calIsView = true }
-            .background(CustomTheme.colors.backPrimary)
-            .padding(vertical = 8.dp),
+            .clickable { if (!checked) checked = true; calIsView = true }
+            .background(ToDoTheme.colors.backPrimary)
+            .padding(vertical = ToDoTheme.dp.listVerticalPadding),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column {
             Text(
                 stringResource(R.string.todo_make_to),
-                color = CustomTheme.colors.labelPrimary,
-                fontSize = 16.sp
+                color = ToDoTheme.colors.labelPrimary,
+                style = ToDoTheme.typography.body
             )
             if (date != null)
                 Text(
                     text = dateText,
-                    color = CustomTheme.colors.labelSecondary,
-                    fontSize = 14.sp
+                    color = ToDoTheme.colors.labelSecondary,
+                    style = ToDoTheme.typography.support
                 )
         }
 
@@ -126,8 +124,8 @@ fun DeadlinePicker(
                 checked = it
             },
             colors = SwitchDefaults.colors(
-                checkedTrackColor = CustomTheme.colors.colorBlue,
-                uncheckedTrackColor = CustomTheme.colors.backSecondary,
+                checkedTrackColor = ToDoTheme.colors.colorBlue,
+                uncheckedTrackColor = ToDoTheme.colors.backSecondary,
             )
         )
     }
@@ -135,19 +133,19 @@ fun DeadlinePicker(
     HorizontalDivider(modifier = Modifier.fillMaxWidth())
 
     val dpColors = DatePickerDefaults.colors(
-        containerColor = CustomTheme.colors.backSecondary,
-        selectedDayContainerColor = CustomTheme.colors.colorBlue,
-        dayContentColor = CustomTheme.colors.labelSecondary,
-        currentYearContentColor = CustomTheme.colors.labelPrimary,
-        todayDateBorderColor = CustomTheme.colors.colorBlue,
-        yearContentColor = CustomTheme.colors.labelSecondary,
-        selectedYearContainerColor = CustomTheme.colors.colorBlue,
-        titleContentColor = CustomTheme.colors.labelSecondary,
-        selectedDayContentColor = CustomTheme.colors.labelPrimary,
-        headlineContentColor = CustomTheme.colors.labelPrimary,
-        weekdayContentColor = CustomTheme.colors.labelTertiary,
-        navigationContentColor = CustomTheme.colors.labelSecondary,
-        todayContentColor = CustomTheme.colors.labelPrimary
+        containerColor = ToDoTheme.colors.backSecondary,
+        selectedDayContainerColor = ToDoTheme.colors.colorBlue,
+        dayContentColor = ToDoTheme.colors.labelSecondary,
+        currentYearContentColor = ToDoTheme.colors.labelPrimary,
+        todayDateBorderColor = ToDoTheme.colors.colorBlue,
+        yearContentColor = ToDoTheme.colors.labelSecondary,
+        selectedYearContainerColor = ToDoTheme.colors.colorBlue,
+        titleContentColor = ToDoTheme.colors.labelSecondary,
+        selectedDayContentColor = ToDoTheme.colors.labelPrimary,
+        headlineContentColor = ToDoTheme.colors.labelPrimary,
+        weekdayContentColor = ToDoTheme.colors.labelTertiary,
+        navigationContentColor = ToDoTheme.colors.labelSecondary,
+        todayContentColor = ToDoTheme.colors.labelPrimary
     )
 
     if (calIsView) DatePickerDialog(
@@ -158,7 +156,7 @@ fun DeadlinePicker(
                     date = datePickerState.selectedDateMillis?.let { Date(it) }
                     calIsView = false
                 }) {
-                Text("Apply", color = CustomTheme.colors.colorBlue)
+                Text("Apply", color = ToDoTheme.colors.colorBlue)
             }
         },
         colors = dpColors
@@ -173,8 +171,8 @@ fun DeadlinePicker(
 @SuppressLint("UnrememberedMutableState")
 @Composable
 @Preview(name = "Deadline picker | Light")
-fun DeadlinePickerPreviewLight() {
-    CustomTheme {
+private fun DeadlinePickerPreviewLight() {
+    ToDoTheme {
         DeadlinePicker(mutableStateOf(null)) {}
     }
 }
@@ -182,8 +180,8 @@ fun DeadlinePickerPreviewLight() {
 @SuppressLint("UnrememberedMutableState")
 @Composable
 @Preview(name = "Deadline picker | Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun DeadlinePickerPreviewDark() {
-    CustomTheme {
+private fun DeadlinePickerPreviewDark() {
+    ToDoTheme {
         DeadlinePicker(mutableStateOf(null)) {}
     }
 }
@@ -191,8 +189,8 @@ fun DeadlinePickerPreviewDark() {
 @SuppressLint("UnrememberedMutableState")
 @Composable
 @Preview(name = "Deadline picker | Light | Date")
-fun DeadlinePickerPreviewLightWithDate() {
-    CustomTheme {
+private fun DeadlinePickerPreviewLightWithDate() {
+    ToDoTheme {
         DeadlinePicker(mutableStateOf(Calendar.getInstance().time)) {}
     }
 }
@@ -200,8 +198,8 @@ fun DeadlinePickerPreviewLightWithDate() {
 @SuppressLint("UnrememberedMutableState")
 @Composable
 @Preview(name = "Deadline picker | Dark | Date", uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun DeadlinePickerPreviewDarkWithDate() {
-    CustomTheme {
+private fun DeadlinePickerPreviewDarkWithDate() {
+    ToDoTheme {
         DeadlinePicker(mutableStateOf(Calendar.getInstance().time)) {}
     }
 }

@@ -14,11 +14,11 @@ interface ToDoRepository {
 
     fun getAllToDo(): Flow<Resource<List<ToDoItemModel>>>
 
-    suspend fun getToDoById(id: String?): ToDoItemModel?
+    fun getToDoById(id: String?): Flow<Resource<ToDoItemModel?>>
 
-    suspend fun addOrEditToDo(item: ToDoItemModel)
+    fun addOrEditToDo(item: ToDoItemModel): Flow<Resource<Nothing>>
 
-    suspend fun deleteToDo(item: ToDoItemModel)
+    fun deleteToDo(item: ToDoItemModel): Flow<Resource<Nothing>>
 
     suspend fun countOfCompleted(): Int
 

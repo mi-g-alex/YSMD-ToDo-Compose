@@ -37,10 +37,10 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import by.g_alex.ysmd_todo_compose.data.listHardCoded
 import by.g_alex.ysmd_todo_compose.data.model.ToDoItemModel
-import by.g_alex.ysmd_todo_compose.presentation.todo.components.ToDoItem
+import by.g_alex.ysmd_todo_compose.presentation.todo.todo_list.additions.ToDoItem
 import by.g_alex.ysmd_todo_compose.presentation.todo.todo_list.additions.ToDoListScreenFAB
 import by.g_alex.ysmd_todo_compose.presentation.todo.todo_list.additions.ToDoListScreenTopBar
-import by.g_alex.ysmd_todo_compose.presentation.ui.theme.CustomTheme
+import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
 
 @Composable
 fun ToDoListScreen(
@@ -100,7 +100,7 @@ fun ToDoScreenContext(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(pad)
-                .background(CustomTheme.colors.backPrimary),
+                .background(ToDoTheme.colors.backPrimary),
         ) {
 
             if (isLoading) {
@@ -110,13 +110,13 @@ fun ToDoScreenContext(
             if (!isLoading && error.isNullOrBlank())
                 LazyColumn(
                     modifier = Modifier
-                        .padding(8.dp)
+                        .padding(ToDoTheme.dp.listPadding)
                         .border(
                             width = 8.dp,
-                            color = CustomTheme.colors.backSecondary,
-                            shape = RoundedCornerShape(10.dp)
+                            color = ToDoTheme.colors.backSecondary,
+                            shape = RoundedCornerShape(ToDoTheme.dp.shapeCorner)
                         )
-                        .padding(5.dp)
+                        .padding(ToDoTheme.dp.listContentPadding)
                 ) {
                     list.filter { showAll || !it.completed }.forEach { item ->
                         item {
@@ -139,19 +139,19 @@ fun ToDoScreenContext(
                                 .clickable { navToEditAdd(null) },
                             shape = RectangleShape,
                             colors = CardDefaults.cardColors()
-                                .copy(containerColor = CustomTheme.colors.backSecondary)
+                                .copy(containerColor = ToDoTheme.colors.backSecondary)
                         ) {
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(5.dp),
+                                    .padding(ToDoTheme.dp.listContentPadding),
                                 horizontalArrangement = Arrangement.Start,
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
                                 Text(
                                     "Create new",
-                                    color = CustomTheme.colors.labelTertiary,
-                                    modifier = Modifier.padding(start = 45.dp),
+                                    color = ToDoTheme.colors.labelTertiary,
+                                    modifier = Modifier.padding(start = ToDoTheme.dp.titleStartPadding),
                                     fontSize = 20.sp
                                 )
                             }
@@ -167,21 +167,21 @@ fun ToDoScreenContext(
 }
 
 
-// Preview экрана в светлой теме
+// Light screen preview
 @Composable
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, name = "List on light theme")
-fun ListPreview() {
-    CustomTheme {
+private fun ListPreview() {
+    ToDoTheme {
         ToDoScreenContext(listHardCoded, false, null, 5, {}, { _, _ -> }, {})
     }
 }
 
 
-// Preview экрана в тёмной теме
+// Dark screen preview
 @Composable
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, name = "List on dark theme")
-fun ListPreviewDark() {
-    CustomTheme {
+private fun ListPreviewDark() {
+    ToDoTheme {
         ToDoScreenContext(listHardCoded, false, null, 5, {}, { _, _ -> }, {})
     }
 }

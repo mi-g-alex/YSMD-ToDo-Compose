@@ -7,19 +7,20 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import by.g_alex.ysmd_todo_compose.presentation.todo.create_edit_todo.CreateEditToDoScreen
+import by.g_alex.ysmd_todo_compose.presentation.todo.create_edit_todo.CreateEditToDoViewModel
 import by.g_alex.ysmd_todo_compose.presentation.todo.todo_list.ToDoListScreen
 
 object Routes {
     const val MAIN_ROUTE = "MAIN_ROUTE"
     const val MAIN_SCREEN = "MAIN_SCREEN"
     const val EDIT_CREATE_SCREEN = "EDIT_CREATE_SCREEN/{id}"
-
 }
 
 @Composable
@@ -74,7 +75,12 @@ fun NavigationScreen(
                 exitTransition = { out }
             ) { entry ->
                 val id = entry.arguments?.getString("id")
-                CreateEditToDoScreen(id, { navController.popBackStack() })
+                val viewModel: CreateEditToDoViewModel = hiltViewModel()
+                viewModel.getElementById(id)
+                CreateEditToDoScreen(
+                    goBack = { navController.navigateUp() },
+                    viewModel = viewModel
+                )
             }
         }
     }
