@@ -1,9 +1,10 @@
 package by.g_alex.ysmd_todo_compose.data.repository
 
+import by.g_alex.ysmd_todo_compose.common.errors.UnknownError
 import by.g_alex.ysmd_todo_compose.common.Resource
 import by.g_alex.ysmd_todo_compose.data.listHardCoded
-import by.g_alex.ysmd_todo_compose.data.model.ToDoItemModel
-import by.g_alex.ysmd_todo_compose.domain.ToDoRepository
+import by.g_alex.ysmd_todo_compose.domain.model.ToDoItemModel
+import by.g_alex.ysmd_todo_compose.domain.repository.ToDoRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.util.Calendar
@@ -25,7 +26,7 @@ class ToDoRepositoryImpl @Inject constructor() : ToDoRepository {
             val data = _listOfToDo.firstOrNull { it.id == id }
             emit(Resource.Success(data))
         } catch (ex: Exception) {
-            emit(Resource.Error(ex.message.toString()))
+            emit(Resource.Error(UnknownError()))
         }
     }
 
@@ -35,7 +36,7 @@ class ToDoRepositoryImpl @Inject constructor() : ToDoRepository {
             val data = listOfToDo
             emit(Resource.Success(data))
         } catch (ex: Exception) {
-            emit(Resource.Error(ex.message.toString()))
+            emit(Resource.Error(UnknownError()))
         }
     }
 
@@ -49,7 +50,7 @@ class ToDoRepositoryImpl @Inject constructor() : ToDoRepository {
             }
             emit(Resource.Success())
         } catch (ex: Exception) {
-            emit(Resource.Error(ex.message.toString()))
+            emit(Resource.Error(UnknownError()))
         }
     }
 
@@ -59,7 +60,7 @@ class ToDoRepositoryImpl @Inject constructor() : ToDoRepository {
             _listOfToDo.remove(item)
             emit(Resource.Success())
         } catch (ex: Exception) {
-            emit(Resource.Error(ex.message.toString()))
+            emit(Resource.Error(UnknownError()))
         }
     }
 

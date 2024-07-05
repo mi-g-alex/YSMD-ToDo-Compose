@@ -1,12 +1,8 @@
-package by.g_alex.ysmd_todo_compose.domain
+package by.g_alex.ysmd_todo_compose.domain.repository
 
 import by.g_alex.ysmd_todo_compose.common.Resource
-import by.g_alex.ysmd_todo_compose.data.additional.enums.ToDoPriority
-import by.g_alex.ysmd_todo_compose.data.model.ToDoItemModel
-import by.g_alex.ysmd_todo_compose.data.repository.ToDoRepositoryImpl
+import by.g_alex.ysmd_todo_compose.domain.model.ToDoItemModel
 import kotlinx.coroutines.flow.Flow
-import java.util.Calendar
-import java.util.Date
 
 interface ToDoRepository {
 

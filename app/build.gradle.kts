@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
 }
@@ -69,9 +70,21 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
 
     implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.work)
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
     kapt(libs.androidx.hilt.compiler)
+
+    implementation(libs.gson)
+
+    // Retrofit
+    implementation(libs.retrofit2.retrofit)
+    implementation (libs.converter.gson)
+
+    implementation(libs.okhttp.v500alpha14)
+    implementation(libs.okhttp3.logging.interceptor)
+    implementation(libs.androidx.work.runtime.ktx)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

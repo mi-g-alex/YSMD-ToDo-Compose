@@ -27,10 +27,9 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import by.g_alex.ysmd_todo_compose.data.additional.enums.ToDoPriority
-import by.g_alex.ysmd_todo_compose.data.model.ToDoItemModel
+import by.g_alex.ysmd_todo_compose.domain.model.ToDoItemModel
 import by.g_alex.ysmd_todo_compose.presentation.todo.components.IconBeforeText
 import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
 import by.g_alex.ysmd_todo_compose.presentation.utils.dateToString

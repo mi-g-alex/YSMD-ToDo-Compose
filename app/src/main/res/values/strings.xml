@@ -9,4 +9,17 @@
     <string name="todo_priority_low">Low</string>
     <string name="todo_make_to">Make to</string>
     <string name="todo_completed">Completed: %d</string>
+    <string name="error_title">Error</string>
+    <string name="error_ok">OK</string>
+    <string name="error_auth">Authorization error. Please login or check token and try again</string>
+    <string name="error_old_data">List of plugins is old. Update list and try again</string>
+    <string name="error_not_found">ToDo not found. Refresh list of todo\'s and try again</string>
+    <string name="error_internal_server">Internal server error. Please try again later</string>
+    <string name="error_unknown">Unknown error :(</string>
+    <string name="error_connection">Connection error. Try again later</string>
+    <string name="rb_bearer_token">Bearer token</string>
+    <string name="rb_auth_2_token">Y.Pass token</string>
+    <string name="auth_save">Save</string>
+    <string name="auth_cancel">Cancel</string>
+    <string name="auth_token_label">Auth Token</string>
 </resources>

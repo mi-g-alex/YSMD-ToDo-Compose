@@ -26,7 +26,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -76,9 +75,9 @@ fun DeadlinePicker(
         )
     }
 
-    var calIsView by rememberSaveable { mutableStateOf(false) }
+    var calIsView by remember { mutableStateOf(false) }
 
-    var checked by rememberSaveable { mutableStateOf(selectedDate.value != null) }
+    var checked by remember { mutableStateOf(selectedDate.value != null) }
 
     LaunchedEffect(date) {
         dateText = if (date != null) dateToString(date!!) else ""

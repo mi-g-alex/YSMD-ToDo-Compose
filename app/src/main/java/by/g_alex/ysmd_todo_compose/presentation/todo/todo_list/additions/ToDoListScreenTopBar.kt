@@ -18,7 +18,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import by.g_alex.ysmd_todo_compose.R
 import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
 
@@ -28,6 +27,7 @@ fun ToDoListScreenTopBar(
     scrollBehavior: TopAppBarScrollBehavior,
     showAll: Boolean,
     onShowClicked: () -> Unit,
+    onAuthClick: () -> Unit,
     cnt: Int
 ) {
     // Something like animation for elevation
@@ -62,6 +62,12 @@ fun ToDoListScreenTopBar(
                         null
                     )
                 }
+                IconButton({ onAuthClick() }) {
+                    Icon(
+                        painterResource(R.drawable.icon_auth),
+                        null
+                    )
+                }
             },
             scrollBehavior = scrollBehavior
         )
@@ -74,7 +80,7 @@ fun ToDoListScreenTopBar(
 private fun ToDoTopBarPreview() {
     ToDoTheme {
         val t = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
-        ToDoListScreenTopBar(t, false, {}, 0)
+        ToDoListScreenTopBar(t, false, {}, {},0)
     }
 }
 
@@ -84,6 +90,6 @@ private fun ToDoTopBarPreview() {
 private fun ToDoTopBarPreviewDark() {
     ToDoTheme {
         val t = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
-        ToDoListScreenTopBar(t, true, {}, 0)
+        ToDoListScreenTopBar(t, true, {}, {},0)
     }
 }

@@ -1,6 +1,7 @@
 package by.g_alex.ysmd_todo_compose.presentation.todo.todo_list.additions
 
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
