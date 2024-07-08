@@ -22,4 +22,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "YSMD-ToDo-Compose"
 include(":app")
+includeBuild("build-logic")
  
