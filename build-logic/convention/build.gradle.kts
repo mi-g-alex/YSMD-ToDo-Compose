@@ -31,8 +31,22 @@ dependencies {
 gradlePlugin {
     plugins {
         register("androidLibrary") {
-            id = "g_alex.adnroid.library"
+            id = "todo.mainLib"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
+        register("hiltLibrary") {
+            id = "todo.hiltLib"
+            implementationClass = "HiltConventionPlugin"
+        }
+        register("networkLibrary") {
+            id = "todo.networkLib"
+            implementationClass = "NetworkConventionPlugin"
+        }
+
+        register("composeLibrary") {
+            id = "todo.composeLib"
+            implementationClass = "ComposeConventionPlugin"
+        }
+
     }
 }
