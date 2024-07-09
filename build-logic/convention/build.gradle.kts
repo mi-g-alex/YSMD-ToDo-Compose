@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     `kotlin-dsl`
 }
@@ -9,23 +7,7 @@ group = "by.g_alex.buildlogic"
 repositories {
     google()
     mavenCentral()
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_18
-    targetCompatibility = JavaVersion.VERSION_18
-}
-
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_18
-    }
-}
-
-
-dependencies {
-    compileOnly(libs.android.gradlePlugin)
-    compileOnly(libs.kotlin.gradlePlugin)
+    gradlePluginPortal()
 }
 
 gradlePlugin {
@@ -42,11 +24,26 @@ gradlePlugin {
             id = "todo.networkLib"
             implementationClass = "NetworkConventionPlugin"
         }
-
         register("composeLibrary") {
             id = "todo.composeLib"
             implementationClass = "ComposeConventionPlugin"
         }
-
+        register("validator") {
+            id = "validator"
+            implementationClass = "by.g_alex.ysmd_todo_compose.tasks.telegram.TelegramReporterPlugin"
+        }
+        register("telegram-reporter") {
+            id = "telegram-reporter"
+            implementationClass = "by.g_alex.ysmd_todo_compose.tasks.validate_apk_size.ValidateApkSizePlugin"
+        }
     }
+}
+
+dependencies {
+    implementation(libs.android.gradlePlugin)
+    implementation(libs.kotlin.gradlePlugin)
+    implementation(libs.kotlin.coroutines.core)
+    implementation(libs.ktor.client)
+    implementation(libs.ktor.client.okhttp)
+    implementation(files(libs.javaClass.superclass.protectionDomain.codeSource.location))
 }

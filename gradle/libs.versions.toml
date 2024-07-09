@@ -1,5 +1,5 @@
 [versions]
-agp = "8.6.0-alpha08"
+agp = "8.2.0"
 gson = "2.11.0"
 androidTools = "31.5.0"
 hiltAndroid = "2.51.1"
@@ -20,7 +20,9 @@ retrofit = "2.11.0"
 workRuntimeKtx = "2.9.0"
 hiltWork = "1.2.0"
 ksp = "2.0.0-1.0.21"
-androidGradlePlugin = "8.4.2"
+androidGradlePlugin = "8.2.2"
+coroutines = "1.7.3"
+ktor = "2.3.7"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -53,6 +55,10 @@ androidx-hilt-work = { group = "androidx.hilt", name = "hilt-work", version.ref 
 
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+ktor-client = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

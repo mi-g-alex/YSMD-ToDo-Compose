@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google {
             content {
@@ -22,5 +23,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "YSMD-ToDo-Compose"
 include(":app")
-includeBuild("build-logic")
  
