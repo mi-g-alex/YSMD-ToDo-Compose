@@ -10,18 +10,14 @@ plugins {
 
 validateApkSize {
     size = 11 * 1024 * 1024
-//    token.set(providers.environmentVariable("TG_TOKEN"))
-//    chatId.set(providers.environmentVariable("TG_CHAT"))
-    token.set("6999102249:AAEGBclQB7gNtkt1IjD6cqCPSfIeX10FZKI")
-    chatId.set("1378305217")
+    token.set(providers.environmentVariable("TG_TOKEN"))
+    chatId.set(providers.environmentVariable("TG_CHAT"))
 }
 
 telegramReporter {
     checkSize = true
-//    token.set(providers.environmentVariable("TG_TOKEN"))
-//    chatId.set(providers.environmentVariable("TG_CHAT"))
-    token.set("6999102249:AAEGBclQB7gNtkt1IjD6cqCPSfIeX10FZKI")
-    chatId.set("1378305217")
+    token.set(providers.environmentVariable("TG_TOKEN"))
+    chatId.set(providers.environmentVariable("TG_CHAT"))
 }
 
 

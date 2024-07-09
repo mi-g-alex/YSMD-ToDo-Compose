@@ -4,6 +4,9 @@ on:
   pull_request:
     paths-ignore:
       - '**.md'
+  push:
+    branches:
+      - 'HW-4'
 
 env:
   gradleFlags: --parallel --stacktrace --no-configuration-cache --no-daemon
@@ -27,3 +30,8 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew :app:reportTelegramApkForBasicRelease $gradleFlags
+      - name: Upload my apk
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release.apk
+          path: app/build/outputs/apk/basic/release/*.apk
