@@ -8,16 +8,16 @@ import io.ktor.http.*
 import java.io.File
 
 private const val BASE_URL = "https://api.telegram.org"
-private const val TOKEN = "6999102249:AAEGBclQB7gNtkt1IjD6cqCPSfIeX10FZKI"
-private const val CHAT_ID = "1378305217"
 
 class TelegramApi(
     private val httpClient: HttpClient,
 ) {
 
-    suspend fun upload(file: File): HttpResponse {
-        return httpClient.post("$BASE_URL/bot$TOKEN/sendDocument") {
-            parameter("chat_id", CHAT_ID)
+    suspend fun upload(file: File, caption: String = "", token: String, chatId: String): HttpResponse {
+        return httpClient.post("$BASE_URL/bot$token/sendDocument") {
+            parameter("chat_id", chatId)
+            parameter("parse_mode", "HTML")
+            if(caption.isNotBlank()) parameter("caption", caption)
             setBody(
                 MultiPartFormDataContent(
                     formData {
@@ -33,9 +33,9 @@ class TelegramApi(
         }
     }
 
-    suspend fun sendMessage(message: String): HttpResponse {
-        return httpClient.post("$BASE_URL/bot$TOKEN/sendMessage") {
-            parameter("chat_id", CHAT_ID)
+    suspend fun sendMessage(message: String, token: String, chatId: String): HttpResponse {
+        return httpClient.post("$BASE_URL/bot$token/sendMessage") {
+            parameter("chat_id", chatId)
             parameter("text", message)
         }
     }

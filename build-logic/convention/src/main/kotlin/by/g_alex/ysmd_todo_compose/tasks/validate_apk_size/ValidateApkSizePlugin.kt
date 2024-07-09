@@ -1,5 +1,6 @@
 package by.g_alex.ysmd_todo_compose.tasks.validate_apk_size
 
+import Versions.versionCode
 import by.g_alex.ysmd_todo_compose.tasks.TelegramApi
 import com.android.build.api.artifact.SingleArtifact
 import com.android.build.api.variant.AndroidComponentsExtension
@@ -27,6 +28,8 @@ class ValidateApkSizePlugin : Plugin<Project> {
             project.tasks.register("ValidateApkSizeFor${variant.name.capitalized()}", ValidateApkSizeTask::class.java, telegramApi).configure {
                 apkDir.set(artifacts)
                 sizeN.set(extension.size)
+                token.set(extension.token)
+                chatId.set(extension.chatId)
             }
         }
     }
@@ -34,4 +37,6 @@ class ValidateApkSizePlugin : Plugin<Project> {
 
 interface ValidateApkSizeExtension {
     val size: Property<Int>
+    val token: Property<String>
+    val chatId: Property<String>
 }
