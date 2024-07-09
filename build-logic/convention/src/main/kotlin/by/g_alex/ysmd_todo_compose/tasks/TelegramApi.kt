@@ -15,6 +15,7 @@ class TelegramApi(
 
     suspend fun upload(file: File, caption: String = "", token: String, chatId: String): HttpResponse {
         return httpClient.post("$BASE_URL/bot$token/sendDocument") {
+            println("$BASE_URL/bot$token/sendDocument\n${chatId}")
             parameter("chat_id", chatId)
             parameter("parse_mode", "HTML")
             if(caption.isNotBlank()) parameter("caption", caption)
