@@ -4,13 +4,13 @@ import by.g_alex.ysmd_todo_compose.common.errors.UnknownError
 import by.g_alex.ysmd_todo_compose.common.Resource
 import by.g_alex.ysmd_todo_compose.data.listHardCoded
 import by.g_alex.ysmd_todo_compose.domain.model.ToDoItemModel
-import by.g_alex.ysmd_todo_compose.domain.repository.ToDoRepository
+import by.g_alex.ysmd_todo_compose.domain.repository.FakeToDoRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.util.Calendar
 import javax.inject.Inject
 
-class ToDoRepositoryImpl @Inject constructor() : ToDoRepository {
+class FakeFakeToDoRepositoryImpl @Inject constructor() : FakeToDoRepository {
 
     private val _listOfToDo = mutableListOf<ToDoItemModel>()
     override val listOfToDo: List<ToDoItemModel>

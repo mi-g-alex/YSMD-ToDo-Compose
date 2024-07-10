@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.util.Log
-import androidx.compose.runtime.traceEventEnd
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.g_alex.ysmd_todo_compose.common.Resource
@@ -12,7 +11,6 @@ import by.g_alex.ysmd_todo_compose.common.broadcast_receivers.NetworkChangeRecei
 import by.g_alex.ysmd_todo_compose.common.errors.ConnectionError
 import by.g_alex.ysmd_todo_compose.di.AppModule
 import by.g_alex.ysmd_todo_compose.domain.model.ToDoItemModel
-import by.g_alex.ysmd_todo_compose.domain.repository.ToDoRepository
 import by.g_alex.ysmd_todo_compose.domain.use_case.DeleteToDoUseCase
 import by.g_alex.ysmd_todo_compose.domain.use_case.EditToDoUseCase
 import by.g_alex.ysmd_todo_compose.domain.use_case.GetAllToDoUseCase

@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import by.g_alex.ysmd_todo_compose.common.Constants
-import by.g_alex.ysmd_todo_compose.data.repository.ToDoRepositoryImpl
-import by.g_alex.ysmd_todo_compose.domain.repository.ToDoRepository
+import by.g_alex.ysmd_todo_compose.data.repository.FakeFakeToDoRepositoryImpl
+import by.g_alex.ysmd_todo_compose.domain.repository.FakeToDoRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,8 +20,8 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideToDoRepository(): ToDoRepository {
-        return ToDoRepositoryImpl()
+    fun provideToDoRepository(): FakeToDoRepository {
+        return FakeFakeToDoRepositoryImpl()
     }
 
     @Singleton

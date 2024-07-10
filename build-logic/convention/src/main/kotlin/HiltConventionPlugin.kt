@@ -6,7 +6,7 @@ class HiltConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
-                apply("kotlin-kapt")
+                apply("com.google.devtools.ksp")
                 apply("com.google.dagger.hilt.android")
             }
 
@@ -14,8 +14,8 @@ class HiltConventionPlugin : Plugin<Project> {
                 add("implementation", versionCatalog().findLibrary("hilt.android").get())
                 add("implementation", versionCatalog().findLibrary("androidx.hilt.work").get())
                 add("implementation", versionCatalog().findLibrary("androidx.hilt.navigation.compose").get())
-                add("kapt", versionCatalog().findLibrary("hilt.android.compiler").get())
-                add("kapt", versionCatalog().findLibrary("androidx.hilt.compiler").get())
+                add("ksp", versionCatalog().findLibrary("hilt.android.compiler").get())
+                add("ksp", versionCatalog().findLibrary("androidx.hilt.compiler").get())
             }
         }
     }
