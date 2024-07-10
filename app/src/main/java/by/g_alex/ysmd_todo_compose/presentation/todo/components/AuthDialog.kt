@@ -100,7 +100,14 @@ fun AuthDialog(
                         Text(stringResource(R.string.auth_token_label))
                     },
                     value = token,
-                    onValueChange = { token = it },
+                    onValueChange = {
+                        if (
+                            it.isEmpty() ||
+                            it.last() in 'a'..'z' || it.last() in 'A'..'Z' || it.last() in '0'..'9' || it.last() == '_'
+                        ) {
+                            token = it
+                        }
+                    },
                     colors = TextFieldDefaults.colors().copy(
                         focusedContainerColor = colors.backSecondary,
                         unfocusedContainerColor = colors.backSecondary,

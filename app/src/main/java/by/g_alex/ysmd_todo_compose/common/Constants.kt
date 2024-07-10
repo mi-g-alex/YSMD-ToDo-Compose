@@ -8,6 +8,7 @@ object Constants {
     const val BASE_URL = "https://hive.mrdekk.ru/todo/"
 
     // SharedPrefs
+    const val ENC_SHARED_PREF_TO_DO = "ENC_SHARED_PREF_TO_DO"
     const val SHARED_PREF_TO_DO = "SHARED_PREF_TO_DO"
     const val SHARED_BEARER_TOKEN = "SHARED_BEARER_TOKEN"
     const val SHARED_AUTH2_TOKEN = "SHARED_AUTH2_TOKEN"

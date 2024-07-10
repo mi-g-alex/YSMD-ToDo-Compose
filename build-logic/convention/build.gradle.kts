@@ -1,5 +1,6 @@
 plugins {
     `kotlin-dsl`
+    id("com.google.devtools.ksp") version("1.9.23-1.0.20") apply(false)
 }
 
 group = "by.g_alex.buildlogic"
@@ -23,6 +24,10 @@ gradlePlugin {
         register("networkLibrary") {
             id = "todo.networkLib"
             implementationClass = "NetworkConventionPlugin"
+        }
+        register("roomLibrary") {
+            id = "todo.roomLib"
+            implementationClass = "RoomConventionPlugin"
         }
         register("composeLibrary") {
             id = "todo.composeLib"

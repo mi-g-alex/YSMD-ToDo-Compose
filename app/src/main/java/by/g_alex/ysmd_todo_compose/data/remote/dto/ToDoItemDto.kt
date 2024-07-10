@@ -34,7 +34,7 @@ data class ToDoItemDto(
     fun toModel() = ToDoItemModel(
         id = id,
         text = text,
-        priority = ToDoPriority.fromDto(priority),
+        priority = ToDoPriority.fromString(priority),
         deadline = deadline?.let { Date(it) },
         completed = completed,
         createDate = Date(createAt),

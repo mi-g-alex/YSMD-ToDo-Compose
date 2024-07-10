@@ -3,6 +3,7 @@ plugins {
     id("todo.hiltLib")
     id("todo.networkLib")
     id("todo.composeLib")
+    id("todo.roomLib")
     id("validator")
     id("telegram-reporter")
     alias(libs.plugins.compose.compiler)
@@ -26,6 +27,10 @@ android {
 
     kotlinOptions {
         jvmTarget = "18"
+    }
+
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
     }
 
     flavorDimensions += "plan"

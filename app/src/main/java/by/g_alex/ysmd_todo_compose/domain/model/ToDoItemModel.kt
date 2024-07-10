@@ -1,6 +1,8 @@
 package by.g_alex.ysmd_todo_compose.domain.model
 
 import by.g_alex.ysmd_todo_compose.data.additional.enums.ToDoPriority
+import by.g_alex.ysmd_todo_compose.data.additional.enums.toDtoString
+import by.g_alex.ysmd_todo_compose.data.local.entities.ToDoEntity
 import by.g_alex.ysmd_todo_compose.data.remote.dto.ToDoItemDto
 import java.util.Calendar
 import java.util.Date
@@ -19,13 +21,27 @@ data class ToDoItemModel(
         return ToDoItemDto(
             id = id ?: time.toString(),
             text = text,
-            priority = ToDoPriority.toDtoString(priority),
+            priority = priority.toDtoString(),
             deadline = deadline?.time,
             completed = completed,
-            createAt = time,
-            changedAt = createDate.time,
+            createAt = createDate.time,
+            changedAt = updateDate?.time,
             // ToDo: FIX IT
             lastUpdateBy = "android_id"
         )
     }
+
+    fun toEntity() : ToDoEntity {
+        val time = Calendar.getInstance().time.time
+        return ToDoEntity(
+            id = id ?: time.toString(),
+            text = text,
+            priority = priority.toDtoString(),
+            deadline = deadline?.time,
+            completed = completed,
+            createDate = createDate.time,
+            updateDate = updateDate?.time,
+        )
+    }
+
 }

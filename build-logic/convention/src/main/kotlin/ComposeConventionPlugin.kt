@@ -24,6 +24,7 @@ class ComposeConventionPlugin : Plugin<Project> {
                 add("implementation", versionCatalog().findLibrary("androidx.material3").get())
                 add("implementation", versionCatalog().findLibrary("androidx.navigation.runtime.ktx").get())
                 add("implementation", versionCatalog().findLibrary("androidx.navigation.compose").get())
+                add("implementation", versionCatalog().findLibrary("androidx.security.crypto").get())
             }
         }
     }

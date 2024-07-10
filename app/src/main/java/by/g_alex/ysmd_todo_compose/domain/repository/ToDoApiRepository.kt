@@ -7,21 +7,39 @@ import by.g_alex.ysmd_todo_compose.data.remote.dto.PatchAllToDoRequestDto
 
 interface ToDoApiRepository {
 
-    /** Get All Todos. Return list [GetAllToDoListDto] **/
+    /**
+     * Get All Todos.
+     * @return [GetAllToDoListDto]
+     * **/
     suspend fun getAllToDo(): GetAllToDoListDto
 
-    /** Get To Do by [id]. Return item [GetToDoByIdResponseDto] **/
+    /**
+     * Get To Do by [id].
+     * @return item [GetToDoByIdResponseDto]
+     * **/
     suspend fun getToDoById(id: String): GetToDoByIdResponseDto
 
-    /** Patch list of ToDos. Return new list [GetAllToDoListDto] **/
+    /**
+     * Patch list of ToDos.
+     * @return new [GetAllToDoListDto]
+     * **/
     suspend fun patchAllToDos(item: PatchAllToDoRequestDto): GetAllToDoListDto
 
-    /** Add NEW item to list. Return new item [GetToDoByIdResponseDto]  **/
+    /**
+     * Add NEW item to list.
+     * @return new item [GetToDoByIdResponseDto]
+     * **/
     suspend fun addNewToDo(item: AddOrUpdateElementByIdDto): GetToDoByIdResponseDto
 
-    /** Edit item to list. Return updated item [GetToDoByIdResponseDto]  **/
+    /**
+     * Edit item to list.
+     * @return updated item [GetToDoByIdResponseDto]
+     * **/
     suspend fun updateToDo(id: String, item: AddOrUpdateElementByIdDto): GetToDoByIdResponseDto
 
-    /** Delete item from list. Return deleted item [GetToDoByIdResponseDto]  **/
+    /**
+     * Delete item from list.
+     * @return deleted item [GetToDoByIdResponseDto]
+     * **/
     suspend fun deleteToDo(id: String): GetToDoByIdResponseDto
 }

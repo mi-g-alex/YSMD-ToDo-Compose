@@ -41,6 +41,7 @@ class ToDoListViewModel @Inject constructor(
 
     init {
         val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        getToken()
         context.registerReceiver(networkChangeReceiver, filter)
     }
 
