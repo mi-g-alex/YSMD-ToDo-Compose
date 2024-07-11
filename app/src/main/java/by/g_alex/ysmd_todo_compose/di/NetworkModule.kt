@@ -1,7 +1,12 @@
 package by.g_alex.ysmd_todo_compose.di
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import by.g_alex.ysmd_todo_compose.common.Constants
+import by.g_alex.ysmd_todo_compose.common.broadcast_receivers.getNetworkConnectionState
+import by.g_alex.ysmd_todo_compose.common.broadcast_receivers.networkCallback
 import by.g_alex.ysmd_todo_compose.data.remote.ToDoAPI
 import by.g_alex.ysmd_todo_compose.data.repository.ToDoApiRepositoryImpl
 import by.g_alex.ysmd_todo_compose.domain.repository.ToDoApiRepository
@@ -10,6 +15,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -78,4 +86,29 @@ class NetworkModule {
         }
     }
 
+    @Singleton
+    class NetworkState @Inject constructor(@ApplicationContext private val context: Context) {
+
+        fun getConnectivityAsFlow(): Flow<Boolean> = callbackFlow {
+            val callback = networkCallback { connectionState ->
+                trySend(connectionState)
+            }
+
+            val connectivityManager =
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+            val networkRequest = NetworkRequest
+                .Builder()
+                .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                .build()
+
+            connectivityManager.registerNetworkCallback(networkRequest, callback)
+            val currentState = getNetworkConnectionState(connectivityManager)
+            trySend(currentState)
+
+            awaitClose {
+                connectivityManager.unregisterNetworkCallback(callback)
+            }
+        }
+    }
 }

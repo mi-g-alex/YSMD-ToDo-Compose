@@ -1,20 +1,23 @@
 package by.g_alex.ysmd_todo_compose.common.broadcast_receivers
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
 import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
 
-class NetworkChangeReceiver(private val listener: NetworkChangeListener) : BroadcastReceiver() {
+fun networkCallback(available: (Boolean) -> Unit): ConnectivityManager.NetworkCallback {
+    return object : ConnectivityManager.NetworkCallback() {
+        override fun onLost(network: Network) {
+            super.onLost(network)
+            available(false)
+        }
 
-    override fun onReceive(context: Context?, intent: Intent?) {
-        val cm = context!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val netInfo = cm.activeNetworkInfo
-        val isConnected = netInfo != null && netInfo.isConnected
-        listener.onNetworkChanged(isConnected)
-    }
-
-    interface NetworkChangeListener {
-        fun onNetworkChanged(isConnected: Boolean)
+        override fun onAvailable(network: Network) {
+            super.onAvailable(network)
+            available(true)
+        }
     }
 }
+
+fun getNetworkConnectionState(connectivityManager: ConnectivityManager): Boolean =
+    connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+        ?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) ?: false

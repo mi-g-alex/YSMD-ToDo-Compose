@@ -1,9 +1,14 @@
 package by.g_alex.ysmd_todo_compose.di
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import by.g_alex.ysmd_todo_compose.common.Constants
+import by.g_alex.ysmd_todo_compose.common.broadcast_receivers.getNetworkConnectionState
+import by.g_alex.ysmd_todo_compose.common.broadcast_receivers.networkCallback
 import by.g_alex.ysmd_todo_compose.data.repository.FakeFakeToDoRepositoryImpl
 import by.g_alex.ysmd_todo_compose.domain.repository.FakeToDoRepository
 import dagger.Module
@@ -11,6 +16,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -97,6 +105,5 @@ class AppModule {
             prefs.getInt(Constants.SHARED_REVISION, 0)
 
     }
-
 
 }

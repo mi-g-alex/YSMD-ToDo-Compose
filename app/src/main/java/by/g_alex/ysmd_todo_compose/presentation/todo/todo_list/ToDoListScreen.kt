@@ -33,6 +33,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import by.g_alex.ysmd_todo_compose.R
 import by.g_alex.ysmd_todo_compose.data.listHardCoded
 import by.g_alex.ysmd_todo_compose.domain.model.ToDoItemModel
 import by.g_alex.ysmd_todo_compose.presentation.todo.components.AuthDialog
@@ -58,7 +59,7 @@ fun ToDoListScreen(
     ToDoScreenContext(
         list = list,
         isLoading = state.value.isLoading,
-        isNetworkError = state.value.isNetworkError,
+        isNetworkAvailable = state.value.isNetworkAvailble,
         error = state.value.isError,
         cnt = cnt,
         navToEditAdd = navToEditAdd,
@@ -76,7 +77,7 @@ fun ToDoListScreen(
 fun ToDoScreenContext(
     list: List<ToDoItemModel>,
     isLoading: Boolean,
-    isNetworkError: Boolean?,
+    isNetworkAvailable: Boolean,
     @StringRes error: Int?,
     cnt: Int,
     navToEditAdd: (id: String?) -> Unit,
@@ -109,7 +110,7 @@ fun ToDoScreenContext(
     }
 
     LaunchedEffect(error) {
-        if (error != null && isNetworkError == false) showErrorDialog = true
+        if (error != null && isNetworkAvailable == true) showErrorDialog = true
     }
 
     val scrollBehavior =
@@ -173,9 +174,9 @@ fun ToDoScreenContext(
                     }
                 }
 
-            if (isNetworkError == true) {
+            if (isNetworkAvailable == false) {
                 Text(
-                    stringResource(error!!),
+                    stringResource(R.string.error_connection),
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(ToDoTheme.colors.colorRed)
@@ -196,7 +197,7 @@ fun ToDoScreenContext(
         }
     }
 
-    if (showErrorDialog && error != null && isNetworkError == false) {
+    if (showErrorDialog && error != null && isNetworkAvailable == true) {
         ErrorDialog(
             { showErrorDialog = false },
             errId = error
@@ -219,7 +220,7 @@ private fun ListPreview() {
         ToDoScreenContext(
             emptyList(),
             isLoading = false,
-            isNetworkError = null,
+            isNetworkAvailable = false,
             error = null,
             cnt = 5,
             navToEditAdd = {},
@@ -243,7 +244,7 @@ private fun ListPreviewDark() {
             listHardCoded,
             isLoading = false,
             error = null,
-            isNetworkError = null,
+            isNetworkAvailable = true,
             cnt = 5,
             navToEditAdd = {},
             onCompleteClicked = { _, _ -> },
