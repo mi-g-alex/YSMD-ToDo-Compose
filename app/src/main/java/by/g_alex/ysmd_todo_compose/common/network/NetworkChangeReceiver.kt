@@ -1,4 +1,4 @@
-package by.g_alex.ysmd_todo_compose.common.broadcast_receivers
+package by.g_alex.ysmd_todo_compose.common.network
 
 import android.net.ConnectivityManager
 import android.net.Network

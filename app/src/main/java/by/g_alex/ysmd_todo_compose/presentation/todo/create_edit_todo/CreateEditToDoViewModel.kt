@@ -52,8 +52,6 @@ class CreateEditToDoViewModel @Inject constructor(
                             it.copy(
                                 isLoading = false,
                                 item = item,
-                                isNetworkError = null,
-                                isError = null
                             )
                         }
                     }
@@ -63,7 +61,6 @@ class CreateEditToDoViewModel @Inject constructor(
                             it.copy(
                                 isLoading = true,
                                 isError = null,
-                                isNetworkError = null
                             )
                         }
                     }
@@ -74,7 +71,6 @@ class CreateEditToDoViewModel @Inject constructor(
                             it.copy(
                                 isLoading = false,
                                 isError = res.error?.errorTextId,
-                                isNetworkError = isNetwork
                             )
                         }
                     }
@@ -103,18 +99,15 @@ class CreateEditToDoViewModel @Inject constructor(
                         it.copy(
                             isLoading = true,
                             isError = null,
-                            isNetworkError = null
                         )
                     }
                 }
 
                 is Resource.Error -> {
-                    val isNetwork = res.error is ConnectionError
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            isError = res.error?.errorTextId,
-                            isNetworkError = isNetwork
+                            isError = res.error?.errorTextId
                         )
                     }
                 }
@@ -136,18 +129,15 @@ class CreateEditToDoViewModel @Inject constructor(
                         it.copy(
                             isLoading = true,
                             isError = null,
-                            isNetworkError = null
                         )
                     }
                 }
 
                 is Resource.Error -> {
-                    val isNetwork = res.error is ConnectionError
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            isError = res.error?.errorTextId,
-                            isNetworkError = isNetwork
+                            isError = res.error?.errorTextId
                         )
                     }
                 }

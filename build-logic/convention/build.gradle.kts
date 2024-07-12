@@ -1,6 +1,5 @@
 plugins {
     `kotlin-dsl`
-    id("com.google.devtools.ksp") version("1.9.23-1.0.20") apply(false)
 }
 
 group = "by.g_alex.buildlogic"

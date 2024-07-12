@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import by.g_alex.ysmd_todo_compose.R
 import by.g_alex.ysmd_todo_compose.common.Resource
 import by.g_alex.ysmd_todo_compose.common.errors.ConnectionError
 import by.g_alex.ysmd_todo_compose.di.AppModule
@@ -42,8 +43,9 @@ class ToDoListViewModel @Inject constructor(
         networkAvailable.getConnectivityAsFlow().onEach { available ->
             Log.e("NETWORK", "Changed available to $available")
             _state.update {
-                it.copy(isNetworkAvailble = available)
+                it.copy(isError = R.string.error_connection)
             }
+            if(available) getAllToDos()
         }.launchIn(viewModelScope)
     }
 

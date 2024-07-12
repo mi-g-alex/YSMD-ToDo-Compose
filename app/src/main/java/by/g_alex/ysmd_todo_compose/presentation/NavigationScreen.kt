@@ -38,7 +38,7 @@ fun NavigationScreen(
     ) + fadeIn(animationSpec = tween(250))
 
     val out = slideOutHorizontally(
-        targetOffsetX = { 451 },
+        targetOffsetX = { 450 },
         animationSpec = tween(
             durationMillis = 250,
             easing = FastOutSlowInEasing

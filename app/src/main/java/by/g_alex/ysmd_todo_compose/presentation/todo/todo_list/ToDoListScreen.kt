@@ -2,9 +2,11 @@ package by.g_alex.ysmd_todo_compose.presentation.todo.todo_list
 
 import android.content.res.Configuration
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -93,11 +96,9 @@ fun ToDoScreenContext(
 
     var showAuthDialog by remember { mutableStateOf(false) }
 
-    var showErrorDialog by remember { mutableStateOf(false) }
-
     val state = rememberPullToRefreshState()
 
-    if (state.isRefreshing && !showErrorDialog) {
+    if (state.isRefreshing) {
         LaunchedEffect(true) {
             refreshPage()
             if (!isLoading)
@@ -107,10 +108,6 @@ fun ToDoScreenContext(
             if (!isLoading)
                 state.endRefresh()
         }
-    }
-
-    LaunchedEffect(error) {
-        if (error != null && isNetworkAvailable == true) showErrorDialog = true
     }
 
     val scrollBehavior =
@@ -141,51 +138,52 @@ fun ToDoScreenContext(
         ) {
 
             if (isLoading) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                LinearProgressIndicator(modifier = Modifier.align(Alignment.TopCenter))
             }
 
-            if (!isLoading)
-                LazyColumn(
-                    modifier = Modifier
-                        .padding(ToDoTheme.dp.listPadding)
-                        .border(
-                            width = 8.dp,
-                            color = ToDoTheme.colors.backSecondary,
-                            shape = RoundedCornerShape(ToDoTheme.dp.shapeCorner)
-                        )
-                        .padding(ToDoTheme.dp.listContentPadding)
-                ) {
-                    list.filter { showAll || !it.completed }.forEach { item ->
-                        item {
-                            ToDoItem(
-                                item,
-                                onComplete = { completed ->
-                                    onCompleteClicked(completed, item)
-                                },
-                                onCardClick = { navToEditAdd(item.id) },
-                                onDelete = { onDeleteClicked(item) }
-                            )
-                        }
-
-                    }
-
+            LazyColumn(
+                modifier = Modifier
+                    .padding(ToDoTheme.dp.listPadding)
+                    .border(
+                        width = 8.dp,
+                        color = ToDoTheme.colors.backSecondary,
+                        shape = RoundedCornerShape(ToDoTheme.dp.shapeCorner)
+                    )
+                    .padding(ToDoTheme.dp.listContentPadding)
+            ) {
+                list.filter { showAll || !it.completed }.forEach { item ->
                     item {
-                        AddNewItemCard { navToEditAdd(null) }
+                        ToDoItem(
+                            item,
+                            onComplete = { completed ->
+                                onCompleteClicked(completed, item)
+                            },
+                            onCardClick = { navToEditAdd(item.id) },
+                            onDelete = { onDeleteClicked(item) }
+                        )
                     }
+
                 }
 
-            if (isNetworkAvailable == false) {
+                item {
+                    AddNewItemCard { navToEditAdd(null) }
+                }
+            }
+
+
+
+            if (error != null)
                 Text(
-                    stringResource(R.string.error_connection),
+                    stringResource(error),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(ToDoTheme.colors.colorRed)
-                        .align(Alignment.BottomCenter),
+                        .align(Alignment.BottomCenter)
+                        .background(ToDoTheme.colors.colorRed),
                     color = Color.White,
                     style = ToDoTheme.typography.support,
                     textAlign = TextAlign.Center
                 )
-            }
+
 
             PullToRefreshContainer(
                 state = state,
@@ -195,13 +193,6 @@ fun ToDoScreenContext(
             )
 
         }
-    }
-
-    if (showErrorDialog && error != null && isNetworkAvailable == true) {
-        ErrorDialog(
-            { showErrorDialog = false },
-            errId = error
-        )
     }
 
     if (showAuthDialog)

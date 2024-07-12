@@ -5,8 +5,8 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import by.g_alex.ysmd_todo_compose.common.Constants
-import by.g_alex.ysmd_todo_compose.common.broadcast_receivers.getNetworkConnectionState
-import by.g_alex.ysmd_todo_compose.common.broadcast_receivers.networkCallback
+import by.g_alex.ysmd_todo_compose.common.network.getNetworkConnectionState
+import by.g_alex.ysmd_todo_compose.common.network.networkCallback
 import by.g_alex.ysmd_todo_compose.data.remote.ToDoAPI
 import by.g_alex.ysmd_todo_compose.data.repository.ToDoApiRepositoryImpl
 import by.g_alex.ysmd_todo_compose.domain.repository.ToDoApiRepository

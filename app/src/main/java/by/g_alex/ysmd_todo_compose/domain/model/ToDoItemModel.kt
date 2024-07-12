@@ -25,7 +25,8 @@ data class ToDoItemModel(
             deadline = deadline?.time,
             completed = completed,
             createAt = createDate.time,
-            changedAt = updateDate?.time,
+            changedAt = updateDate?.time ?: createDate.time,
+            files = null,
             // ToDo: FIX IT
             lastUpdateBy = "android_id"
         )

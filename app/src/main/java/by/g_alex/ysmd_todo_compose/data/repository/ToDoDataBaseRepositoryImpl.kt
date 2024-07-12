@@ -17,13 +17,17 @@ class ToDoDataBaseRepositoryImpl @Inject constructor(
     override suspend fun getAllToDo(): List<ToDoItemModel> =
         dao.getAllToDo().map { it.toModel() }
 
+    override suspend fun updateAllToDos(todos: List<ToDoItemModel>) {
+        dao.deleteAllToDo()
+        dao.addAllToDos(todos.map { it.toEntity() })
+    }
 
     override suspend fun addToDo(item: ToDoItemModel) {
         dao.addToDo(item.toEntity())
     }
 
-    override suspend fun deleteToDo(item: ToDoItemModel) {
-        item.id?.let { dao.deleteToDo(it) }
+    override suspend fun deleteToDo(id: String) {
+        dao.deleteToDo(id)
     }
 
     override suspend fun updateToDo(id: String, item: ToDoItemModel) {

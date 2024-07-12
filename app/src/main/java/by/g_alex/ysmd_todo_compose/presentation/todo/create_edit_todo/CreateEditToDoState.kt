@@ -6,6 +6,5 @@ import by.g_alex.ysmd_todo_compose.domain.model.ToDoItemModel
 data class CreateEditToDoState(
     val item: ToDoItemModel? = null,
     val isLoading: Boolean = false,
-    val isNetworkError: Boolean? = null,
     @StringRes val isError: Int? = null
 )

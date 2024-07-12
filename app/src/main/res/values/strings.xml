@@ -16,10 +16,11 @@
     <string name="error_not_found">ToDo not found. Refresh list of todo\'s and try again</string>
     <string name="error_internal_server">Internal server error. Please try again later</string>
     <string name="error_unknown">Unknown error :(</string>
-    <string name="error_connection">Connection error. Try again later</string>
+    <string name="error_connection">Connection error. Changes will save offline</string>
     <string name="rb_bearer_token">Bearer token</string>
     <string name="rb_auth_2_token">Y.Pass token</string>
     <string name="auth_save">Save</string>
     <string name="auth_cancel">Cancel</string>
     <string name="auth_token_label">Auth Token</string>
+    <string name="empty" />
 </resources>
