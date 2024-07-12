@@ -1,7 +1,7 @@
 package by.g_alex.ysmd_todo_compose.data
 
 import by.g_alex.ysmd_todo_compose.data.additional.enums.ToDoPriority
-import by.g_alex.ysmd_todo_compose.data.model.ToDoItemModel
+import by.g_alex.ysmd_todo_compose.domain.model.ToDoItemModel
 import java.util.Date
 
 val listHardCoded = listOf(

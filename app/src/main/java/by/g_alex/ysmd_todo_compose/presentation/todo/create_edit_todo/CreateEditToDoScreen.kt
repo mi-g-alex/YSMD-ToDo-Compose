@@ -2,13 +2,19 @@ package by.g_alex.ysmd_todo_compose.presentation.todo.create_edit_todo
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
+import android.util.Log
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -17,8 +23,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import by.g_alex.ysmd_todo_compose.data.additional.enums.ToDoPriority
+import by.g_alex.ysmd_todo_compose.presentation.todo.components.ErrorDialog
 import by.g_alex.ysmd_todo_compose.presentation.todo.create_edit_todo.additions.CreateEditTextField
 import by.g_alex.ysmd_todo_compose.presentation.todo.create_edit_todo.additions.CreateEditTopAppBar
 import by.g_alex.ysmd_todo_compose.presentation.todo.create_edit_todo.additions.DeadlinePicker
@@ -40,11 +50,13 @@ fun CreateEditToDoScreen(
 
     CreateEditContent(
         canBeDeleted = item != null,
+        isNetworkError = state.value.isNetworkError,
         mToDoText = viewModel.toDoText,
         mSelectedPriority = viewModel.selectedPriority,
         mSelectedDeadline = viewModel.selectedDeadline,
-        saveToDo = { viewModel.saveToDo() },
-        deleteToDo = { viewModel.deleteToDo() },
+        saveToDo = { viewModel.saveToDo { goBack() } },
+        deleteToDo = { viewModel.deleteToDo { goBack() } },
+        error = state.value.isError,
         goBack = goBack
     )
 }
@@ -54,6 +66,8 @@ private fun CreateEditContent(
     canBeDeleted: Boolean,
     mToDoText: MutableState<String>,
     mSelectedPriority: MutableState<ToDoPriority>,
+    isNetworkError: Boolean?,
+    @StringRes error: Int?,
     mSelectedDeadline: MutableState<Date?>,
     saveToDo: () -> Unit,
     deleteToDo: () -> Unit,
@@ -64,53 +78,82 @@ private fun CreateEditContent(
 
     var selectedPriority by remember { mSelectedPriority }
 
+    var showErrorDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(error) {
+        if (error != null) showErrorDialog = true
+    }
+
     Scaffold(
         topBar = {
             CreateEditTopAppBar(
                 onBackClicked = goBack,
-                onSaveClick = {
-                    saveToDo()
-                    goBack()
-                },
+                onSaveClick = saveToDo,
                 enabledSave = toDoText.isNotBlank()
             )
         },
         modifier = Modifier.background(ToDoTheme.colors.backPrimary)
     ) { pad ->
 
-        LazyColumn(
+        Box(
             modifier = Modifier
-                .padding(pad)
                 .fillMaxSize()
+                .padding(pad)
                 .background(ToDoTheme.colors.backPrimary)
-                .padding(horizontal = ToDoTheme.dp.listHorizontalPadding),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            contentPadding = PaddingValues(vertical = ToDoTheme.dp.listContentPadding)
         ) {
 
-            item {
-                CreateEditTextField(toDoText) {
-                    toDoText = it
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(ToDoTheme.colors.backPrimary)
+                    .padding(horizontal = ToDoTheme.dp.listHorizontalPadding),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                contentPadding = PaddingValues(vertical = ToDoTheme.dp.listContentPadding)
+            ) {
+
+                item {
+                    CreateEditTextField(toDoText) {
+                        toDoText = it
+                    }
                 }
-            }
 
-            item {
-                PrioritySelector(selectedPriority) { selectedPriority = it }
-            }
-
-            item {
-                DeadlinePicker(mSelectedDeadline) { mSelectedDeadline.value = it }
-            }
-
-            item {
-                DeleteToDo(canBeDeleted) {
-                    deleteToDo()
-                    goBack()
+                item {
+                    PrioritySelector(selectedPriority) { selectedPriority = it }
                 }
+
+                item {
+                    DeadlinePicker(mSelectedDeadline) { mSelectedDeadline.value = it }
+                }
+
+                item {
+                    DeleteToDo(canBeDeleted) {
+                        deleteToDo()
+                        goBack()
+                    }
+                }
+
             }
 
+            if (isNetworkError == true) {
+                Text(
+                    stringResource(error!!),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(ToDoTheme.colors.colorRed)
+                        .align(Alignment.BottomCenter),
+                    color = Color.White,
+                    style = ToDoTheme.typography.support,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
 
+        if (showErrorDialog && error != null && isNetworkError == false) {
+            ErrorDialog(
+                { showErrorDialog = false },
+                errId = error
+            )
+        }
     }
 }
 
@@ -120,11 +163,13 @@ private fun CreateEditContent(
 private fun PreviewCreate() {
     ToDoTheme {
         CreateEditContent(
-            false,
-            mutableStateOf(""),
-            mutableStateOf(ToDoPriority.NONE),
-            mutableStateOf(null),
-            {}, {}, {},
+            canBeDeleted = false,
+            mToDoText = mutableStateOf(""),
+            mSelectedPriority = mutableStateOf(ToDoPriority.NONE),
+            isNetworkError = null,
+            error = 0,
+            mSelectedDeadline = mutableStateOf(null),
+            saveToDo = {}, deleteToDo = {}, goBack = {},
         )
     }
 }
@@ -135,11 +180,13 @@ private fun PreviewCreate() {
 private fun PreviewCreateNight() {
     ToDoTheme {
         CreateEditContent(
-            false,
-            mutableStateOf(""),
-            mutableStateOf(ToDoPriority.NONE),
-            mutableStateOf(null),
-            {}, {}, {},
+            canBeDeleted = false,
+            mToDoText = mutableStateOf(""),
+            mSelectedPriority = mutableStateOf(ToDoPriority.NONE),
+            isNetworkError = null,
+            error = 0,
+            mSelectedDeadline = mutableStateOf(null),
+            saveToDo = {}, deleteToDo = {}, goBack = {},
         )
     }
 }
@@ -150,11 +197,13 @@ private fun PreviewCreateNight() {
 private fun PreviewEditLight() {
     ToDoTheme {
         CreateEditContent(
-            true,
-            mutableStateOf("Hello"),
-            mutableStateOf(ToDoPriority.HIGH),
-            mutableStateOf(Calendar.getInstance().time),
-            {}, {}, {},
+            canBeDeleted = true,
+            mToDoText = mutableStateOf("Hello"),
+            mSelectedPriority = mutableStateOf(ToDoPriority.HIGH),
+            isNetworkError = null,
+            error = 0,
+            mSelectedDeadline = mutableStateOf(Calendar.getInstance().time),
+            saveToDo = {}, deleteToDo = {}, goBack = {},
         )
     }
 }
@@ -165,11 +214,13 @@ private fun PreviewEditLight() {
 private fun PreviewEditNight() {
     ToDoTheme {
         CreateEditContent(
-            true,
-            mutableStateOf("Hello"),
-            mutableStateOf(ToDoPriority.HIGH),
-            mutableStateOf(Calendar.getInstance().time),
-            {}, {}, {},
+            canBeDeleted = true,
+            mToDoText = mutableStateOf("Hello"),
+            mSelectedPriority = mutableStateOf(ToDoPriority.HIGH),
+            isNetworkError = null,
+            error = 0,
+            mSelectedDeadline = mutableStateOf(Calendar.getInstance().time),
+            saveToDo = {}, deleteToDo = {}, goBack = {},
         )
     }
 }

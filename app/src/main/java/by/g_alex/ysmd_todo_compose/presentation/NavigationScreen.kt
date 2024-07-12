@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import by.g_alex.ysmd_todo_compose.presentation.todo.create_edit_todo.CreateEditToDoScreen
 import by.g_alex.ysmd_todo_compose.presentation.todo.create_edit_todo.CreateEditToDoViewModel
 import by.g_alex.ysmd_todo_compose.presentation.todo.todo_list.ToDoListScreen
+import by.g_alex.ysmd_todo_compose.presentation.todo.todo_list.ToDoListViewModel
 
 object Routes {
     const val MAIN_ROUTE = "MAIN_ROUTE"
@@ -57,6 +58,8 @@ fun NavigationScreen(
             composable(
                 route = Routes.MAIN_SCREEN,
             ) { _ ->
+                val viewModel: ToDoListViewModel = hiltViewModel()
+                viewModel.getAllToDos()
                 ToDoListScreen(
                     navToEditAdd = {
                         navController.navigate(
@@ -65,7 +68,8 @@ fun NavigationScreen(
                                 it.toString()
                             )
                         )
-                    }
+                    },
+                    viewModel
                 )
             }
 
@@ -76,7 +80,7 @@ fun NavigationScreen(
             ) { entry ->
                 val id = entry.arguments?.getString("id")
                 val viewModel: CreateEditToDoViewModel = hiltViewModel()
-                viewModel.getElementById(id)
+                id?.let { viewModel.getElementById(it) }
                 CreateEditToDoScreen(
                     goBack = { navController.navigateUp() },
                     viewModel = viewModel
