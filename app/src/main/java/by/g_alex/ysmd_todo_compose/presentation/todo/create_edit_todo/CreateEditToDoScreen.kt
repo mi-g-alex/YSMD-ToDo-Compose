@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.util.Log
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,6 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import by.g_alex.ysmd_todo_compose.R
 import by.g_alex.ysmd_todo_compose.data.additional.enums.ToDoPriority
 import by.g_alex.ysmd_todo_compose.presentation.todo.components.ErrorDialog
 import by.g_alex.ysmd_todo_compose.presentation.todo.create_edit_todo.additions.CreateEditTextField
@@ -50,7 +53,6 @@ fun CreateEditToDoScreen(
 
     CreateEditContent(
         canBeDeleted = item != null,
-        isNetworkError = state.value.isNetworkError,
         mToDoText = viewModel.toDoText,
         mSelectedPriority = viewModel.selectedPriority,
         mSelectedDeadline = viewModel.selectedDeadline,
@@ -66,7 +68,6 @@ private fun CreateEditContent(
     canBeDeleted: Boolean,
     mToDoText: MutableState<String>,
     mSelectedPriority: MutableState<ToDoPriority>,
-    isNetworkError: Boolean?,
     @StringRes error: Int?,
     mSelectedDeadline: MutableState<Date?>,
     saveToDo: () -> Unit,
@@ -134,26 +135,20 @@ private fun CreateEditContent(
 
             }
 
-            if (isNetworkError == true) {
-                Text(
-                    stringResource(error!!),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(ToDoTheme.colors.colorRed)
-                        .align(Alignment.BottomCenter),
-                    color = Color.White,
-                    style = ToDoTheme.typography.support,
-                    textAlign = TextAlign.Center
-                )
-            }
-        }
-
-        if (showErrorDialog && error != null && isNetworkError == false) {
-            ErrorDialog(
-                { showErrorDialog = false },
-                errId = error
+            if(error != null)
+            Text(
+                stringResource(error),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .background(ToDoTheme.colors.colorRed),
+                color = Color.White,
+                style = ToDoTheme.typography.support,
+                textAlign = TextAlign.Center
             )
         }
+
+
     }
 }
 
@@ -166,7 +161,6 @@ private fun PreviewCreate() {
             canBeDeleted = false,
             mToDoText = mutableStateOf(""),
             mSelectedPriority = mutableStateOf(ToDoPriority.NONE),
-            isNetworkError = null,
             error = 0,
             mSelectedDeadline = mutableStateOf(null),
             saveToDo = {}, deleteToDo = {}, goBack = {},
@@ -183,7 +177,6 @@ private fun PreviewCreateNight() {
             canBeDeleted = false,
             mToDoText = mutableStateOf(""),
             mSelectedPriority = mutableStateOf(ToDoPriority.NONE),
-            isNetworkError = null,
             error = 0,
             mSelectedDeadline = mutableStateOf(null),
             saveToDo = {}, deleteToDo = {}, goBack = {},
@@ -200,7 +193,6 @@ private fun PreviewEditLight() {
             canBeDeleted = true,
             mToDoText = mutableStateOf("Hello"),
             mSelectedPriority = mutableStateOf(ToDoPriority.HIGH),
-            isNetworkError = null,
             error = 0,
             mSelectedDeadline = mutableStateOf(Calendar.getInstance().time),
             saveToDo = {}, deleteToDo = {}, goBack = {},
@@ -217,7 +209,6 @@ private fun PreviewEditNight() {
             canBeDeleted = true,
             mToDoText = mutableStateOf("Hello"),
             mSelectedPriority = mutableStateOf(ToDoPriority.HIGH),
-            isNetworkError = null,
             error = 0,
             mSelectedDeadline = mutableStateOf(Calendar.getInstance().time),
             saveToDo = {}, deleteToDo = {}, goBack = {},

@@ -1,0 +1,37 @@
+name: ToDo Build
+
+on:
+  pull_request:
+    paths-ignore:
+      - '**.md'
+  push:
+    branches:
+      - 'HW-4'
+
+env:
+  gradleFlags: --parallel --stacktrace --no-configuration-cache --no-daemon
+  TG_CHAT: ${{ secrets.TG_CHAT }}
+  TG_TOKEN: ${{ secrets.TG_TOKEN }}
+
+jobs:
+  build-and-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: set up JDK 18
+        uses: actions/setup-java@v3
+        with:
+          java-version: '18'
+          distribution: 'temurin'
+          cache: gradle
+      - name: Grant execute permission for gradlew
+        shell: bash
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew :app:reportTelegramApkForBasicRelease $gradleFlags
+      - name: Upload my apk
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release.apk
+          path: app/build/outputs/apk/basic/release/*.apk

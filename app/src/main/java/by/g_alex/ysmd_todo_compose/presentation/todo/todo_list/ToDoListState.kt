@@ -5,7 +5,7 @@ import by.g_alex.ysmd_todo_compose.domain.model.ToDoItemModel
 
 data class ToDoListState(
     val listOfToDo: List<ToDoItemModel> = emptyList(),
-    val isNetworkError: Boolean? = null,
+    val isNetworkAvailble: Boolean = true,
     val cnt: Int = 0,
     val isLoading: Boolean = false,
     val isBearerToken: Boolean? = null,

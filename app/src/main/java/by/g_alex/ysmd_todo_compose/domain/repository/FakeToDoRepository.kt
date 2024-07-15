@@ -4,7 +4,7 @@ import by.g_alex.ysmd_todo_compose.common.Resource
 import by.g_alex.ysmd_todo_compose.domain.model.ToDoItemModel
 import kotlinx.coroutines.flow.Flow
 
-interface ToDoRepository {
+interface FakeToDoRepository {
 
     val listOfToDo: List<ToDoItemModel>
 

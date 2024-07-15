@@ -25,9 +25,9 @@ class DataUpdateWorker @AssistedInject constructor(
     override suspend fun doWork(): Result {
         return withContext(Dispatchers.IO) {
             try {
-                Log.d("WORKER", "SETTED")
                 // Here only request before adding db
                 toDoAPI.getAllToDo()
+                Log.d("WORKER", "SETTED")
                 Result.success()
             } catch (ex: Exception) {
                 Result.retry()

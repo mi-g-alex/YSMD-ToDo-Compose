@@ -1,6 +1,8 @@
 package by.g_alex.ysmd_todo_compose.data.additional.enums
 
-import by.g_alex.ysmd_todo_compose.domain.model.ToDoItemModel
+import by.g_alex.ysmd_todo_compose.data.additional.enums.ToDoPriority.HIGH
+import by.g_alex.ysmd_todo_compose.data.additional.enums.ToDoPriority.LOW
+import by.g_alex.ysmd_todo_compose.data.additional.enums.ToDoPriority.NONE
 
 enum class ToDoPriority {
     NONE,
@@ -8,7 +10,7 @@ enum class ToDoPriority {
     LOW;
 
     companion object {
-        fun fromDto(str: String): ToDoPriority {
+        fun fromString(str: String): ToDoPriority {
             return when (str.lowercase()) {
                 "low" -> LOW
                 "important" -> HIGH
@@ -16,21 +18,22 @@ enum class ToDoPriority {
                 else -> NONE
             }
         }
+    }
+}
 
-        fun toDtoString(priority: ToDoPriority): String {
-            return when (priority) {
-                LOW -> {
-                    "low"
-                }
+fun ToDoPriority.toDtoString(): String {
+    return when (this) {
+        LOW -> {
+            "low"
+        }
 
-                NONE -> {
-                    "basic"
-                }
+        NONE -> {
+            "basic"
+        }
 
-                HIGH -> {
-                    "important"
-                }
-            }
+        HIGH -> {
+            "important"
         }
     }
 }
+

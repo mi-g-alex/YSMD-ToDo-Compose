@@ -1,18 +1,15 @@
 package by.g_alex.ysmd_todo_compose.presentation.todo.todo_list
 
 import android.content.Context
-import android.content.IntentFilter
-import android.net.ConnectivityManager
 import android.util.Log
-import androidx.compose.runtime.traceEventEnd
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import by.g_alex.ysmd_todo_compose.R
 import by.g_alex.ysmd_todo_compose.common.Resource
-import by.g_alex.ysmd_todo_compose.common.broadcast_receivers.NetworkChangeReceiver
 import by.g_alex.ysmd_todo_compose.common.errors.ConnectionError
 import by.g_alex.ysmd_todo_compose.di.AppModule
+import by.g_alex.ysmd_todo_compose.di.NetworkModule
 import by.g_alex.ysmd_todo_compose.domain.model.ToDoItemModel
-import by.g_alex.ysmd_todo_compose.domain.repository.ToDoRepository
 import by.g_alex.ysmd_todo_compose.domain.use_case.DeleteToDoUseCase
 import by.g_alex.ysmd_todo_compose.domain.use_case.EditToDoUseCase
 import by.g_alex.ysmd_todo_compose.domain.use_case.GetAllToDoUseCase
@@ -31,37 +28,25 @@ class ToDoListViewModel @Inject constructor(
     private val editToDoUseCase: EditToDoUseCase,
     private val deleteToDoUseCase: DeleteToDoUseCase,
     private val mp: AppModule.MyPreference,
-    @ApplicationContext private val context: Context
-) : ViewModel(), NetworkChangeReceiver.NetworkChangeListener {
+    private val networkAvailable: NetworkModule.NetworkState
+) : ViewModel() {
 
     private val _state = MutableStateFlow(ToDoListState())
     val state = _state.asStateFlow()
 
-    private val networkChangeReceiver = NetworkChangeReceiver(this)
-
     init {
-        val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-        context.registerReceiver(networkChangeReceiver, filter)
+        getToken()
+        checkNetwork()
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        context.unregisterReceiver(networkChangeReceiver)
-    }
-
-    override fun onNetworkChanged(isConnected: Boolean) {
-        Log.e("List VM", "BROADCAST, NETWORK: ${isConnected}")
-        if (isConnected) {
-            getAllToDos()
-        } else {
+    private fun checkNetwork() {
+        networkAvailable.getConnectivityAsFlow().onEach { available ->
+            Log.e("NETWORK", "Changed available to $available")
             _state.update {
-                it.copy(
-                    isLoading = false,
-                    isError = ConnectionError().errorTextId,
-                    isNetworkError = true
-                )
+                it.copy(isError = R.string.error_connection)
             }
-        }
+            if(available) getAllToDos()
+        }.launchIn(viewModelScope)
     }
 
     fun getAllToDos() {
@@ -74,8 +59,7 @@ class ToDoListViewModel @Inject constructor(
                             isLoading = false,
                             listOfToDo = res.data ?: emptyList(),
                             cnt = cnt,
-                            isError = null,
-                            isNetworkError = null
+                            isError = null
                         )
                     }
                 }
@@ -84,19 +68,16 @@ class ToDoListViewModel @Inject constructor(
                     _state.update {
                         it.copy(
                             isLoading = true,
-                            isError = null,
-                            isNetworkError = null
+                            isError = null
                         )
                     }
                 }
 
                 is Resource.Error -> {
-                    val isNetwork = res.error is ConnectionError
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            isError = res.error?.errorTextId,
-                            isNetworkError = isNetwork
+                            isError = res.error?.errorTextId
                         )
                     }
                 }
@@ -113,7 +94,6 @@ class ToDoListViewModel @Inject constructor(
                         it.copy(
                             isLoading = false,
                             isError = null,
-                            isNetworkError = null
                         )
                     }
                     getAllToDos()
@@ -124,7 +104,6 @@ class ToDoListViewModel @Inject constructor(
                         it.copy(
                             isLoading = true,
                             isError = null,
-                            isNetworkError = null
                         )
                     }
                 }
@@ -135,7 +114,7 @@ class ToDoListViewModel @Inject constructor(
                         it.copy(
                             isLoading = false,
                             isError = res.error?.errorTextId,
-                            isNetworkError = isNetwork
+                            isNetworkAvailble = isNetwork
                         )
                     }
                 }
@@ -152,7 +131,6 @@ class ToDoListViewModel @Inject constructor(
                         it.copy(
                             isLoading = false,
                             isError = null,
-                            isNetworkError = null
                         )
                     }
                     getAllToDos()
@@ -163,7 +141,6 @@ class ToDoListViewModel @Inject constructor(
                         it.copy(
                             isLoading = true,
                             isError = null,
-                            isNetworkError = null
                         )
                     }
                 }
@@ -174,7 +151,7 @@ class ToDoListViewModel @Inject constructor(
                         it.copy(
                             isLoading = false,
                             isError = res.error?.errorTextId,
-                            isNetworkError = isNetwork
+                            isNetworkAvailble = isNetwork
                         )
                     }
                 }

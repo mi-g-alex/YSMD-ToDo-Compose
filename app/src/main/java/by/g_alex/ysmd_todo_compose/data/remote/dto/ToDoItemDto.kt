@@ -26,7 +26,10 @@ data class ToDoItemDto(
     val createAt: Long,
 
     @SerializedName("changed_at")
-    val changedAt: Long?,
+    val changedAt: Long,
+
+    @SerializedName("files")
+    val files: List<String>?,
 
     @SerializedName("last_updated_by")
     val lastUpdateBy: Any?
@@ -34,10 +37,10 @@ data class ToDoItemDto(
     fun toModel() = ToDoItemModel(
         id = id,
         text = text,
-        priority = ToDoPriority.fromDto(priority),
+        priority = ToDoPriority.fromString(priority),
         deadline = deadline?.let { Date(it) },
         completed = completed,
         createDate = Date(createAt),
-        updateDate = changedAt?.let { Date(it) }
+        updateDate = Date(changedAt)
     )
 }
