@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import by.g_alex.ysmd_todo_compose.data.additional.enums.ToDoPriority
 import by.g_alex.ysmd_todo_compose.domain.model.ToDoItemModel
 import by.g_alex.ysmd_todo_compose.presentation.todo.components.IconBeforeText
+import by.g_alex.ysmd_todo_compose.presentation.todo.components.bounceClick
 import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
 import by.g_alex.ysmd_todo_compose.presentation.utils.dateToString
 import java.util.Date
@@ -56,7 +57,9 @@ fun ToDoItem(
     } else {
         CheckboxDefaults.colors().copy(
             checkedBorderColor = ToDoTheme.colors.colorGreen,
-            checkedBoxColor = ToDoTheme.colors.colorGreen
+            checkedBoxColor = ToDoTheme.colors.colorGreen,
+            uncheckedBoxColor = ToDoTheme.colors.colorGray.copy(alpha = 0.16f),
+            uncheckedBorderColor = ToDoTheme.colors.colorGray
         )
     }
 
@@ -83,6 +86,7 @@ fun ToDoItem(
                 onCheckedChange = {
                     onComplete(it)
                 },
+                modifier = Modifier.bounceClick(0.6f),
                 colors = checkBoxColor
             )
 

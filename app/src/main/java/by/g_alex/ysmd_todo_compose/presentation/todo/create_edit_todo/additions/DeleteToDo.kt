@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import by.g_alex.ysmd_todo_compose.R
+import by.g_alex.ysmd_todo_compose.presentation.todo.components.bounceClick
 import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
 import by.g_alex.ysmd_todo_compose.presentation.ui.theme.YSMDToDoComposeTheme
 
@@ -33,7 +34,8 @@ fun DeleteToDo(
         horizontalArrangement = Arrangement.End
     ) {
         TextButton(
-            onClick = { onDelete() },
+            onClick = { onDelete()  },
+            modifier = Modifier.bounceClick(),
             enabled = enabled,
             colors = ButtonDefaults.textButtonColors().copy(
                 contentColor = ToDoTheme.colors.colorRed,
