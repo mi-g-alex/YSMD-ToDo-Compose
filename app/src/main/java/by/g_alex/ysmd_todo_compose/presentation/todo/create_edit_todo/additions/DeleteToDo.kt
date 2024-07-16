@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import by.g_alex.ysmd_todo_compose.R
 import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
+import by.g_alex.ysmd_todo_compose.presentation.ui.theme.YSMDToDoComposeTheme
 
 @Composable
 fun DeleteToDo(
@@ -49,31 +50,39 @@ fun DeleteToDo(
 @Composable
 @Preview(name = "Delete | Light | Can't delete")
 private fun DeleteToDoPreviewLight() {
-    ToDoTheme {
-        DeleteToDo(false) {}
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            DeleteToDo(false) {}
+        }
     }
 }
 
 @Composable
 @Preview(name = "Delete | Dark | Can't delete", uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun DeleteToDoPreviewDark() {
-    ToDoTheme {
-        DeleteToDo(false) {}
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            DeleteToDo(false) {}
+        }
     }
 }
 
 @Composable
 @Preview(name = "Delete | Light | Can delete")
 private fun DeleteToDoPreviewLightCanSave() {
-    ToDoTheme {
-        DeleteToDo(true) {}
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            DeleteToDo(true) {}
+        }
     }
 }
 
 @Composable
 @Preview(name = "Delete | Dark | Can delete", uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun DeleteToDoPreviewDarkCanSave() {
-    ToDoTheme {
-        DeleteToDo(true) {}
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            DeleteToDo(true) {}
+        }
     }
 }

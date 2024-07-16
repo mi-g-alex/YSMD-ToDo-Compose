@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
 import by.g_alex.ysmd_todo_compose.presentation.ui.theme.White
+import by.g_alex.ysmd_todo_compose.presentation.ui.theme.YSMDToDoComposeTheme
 
 @Composable
 fun ToDoListScreenFAB(
@@ -19,8 +20,6 @@ fun ToDoListScreenFAB(
     FloatingActionButton(
         onClick = { navToEditAdd() },
         shape = CircleShape,
-        containerColor = ToDoTheme.colors.colorBlue,
-        contentColor = White
     ) {
         Icon(
             Icons.Outlined.Add,
@@ -32,15 +31,19 @@ fun ToDoListScreenFAB(
 @Composable
 @Preview(name = "FAB", showBackground = false)
 private fun ToDoListFABPreview() {
-    ToDoTheme {
-        ToDoListScreenFAB { }
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            ToDoListScreenFAB { }
+        }
     }
 }
 
 @Composable
 @Preview(name = "FAB", showBackground = false, uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun ToDoListFABPreviewDark() {
-    ToDoTheme {
-        ToDoListScreenFAB { }
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            ToDoListScreenFAB { }
+        }
     }
 }

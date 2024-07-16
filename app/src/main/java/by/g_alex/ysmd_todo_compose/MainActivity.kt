@@ -13,6 +13,7 @@ import androidx.work.WorkManager
 import by.g_alex.ysmd_todo_compose.common.workers.DataUpdateWorker
 import by.g_alex.ysmd_todo_compose.presentation.NavigationScreen
 import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
+import by.g_alex.ysmd_todo_compose.presentation.ui.theme.YSMDToDoComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.TimeUnit
 
@@ -33,9 +34,11 @@ class MainActivity : ComponentActivity() {
 
         enableEdgeToEdge()
         setContent {
-            ToDoTheme {
-                Surface(modifier = Modifier.fillMaxSize()) {
-                    NavigationScreen()
+            YSMDToDoComposeTheme {
+                ToDoTheme {
+                    Surface(modifier = Modifier.fillMaxSize()) {
+                        NavigationScreen()
+                    }
                 }
             }
         }

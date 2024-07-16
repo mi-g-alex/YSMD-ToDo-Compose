@@ -14,6 +14,7 @@ import by.g_alex.ysmd_todo_compose.R
 import by.g_alex.ysmd_todo_compose.data.additional.enums.ToDoPriority
 import by.g_alex.ysmd_todo_compose.presentation.todo.components.IconBeforeText
 import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
+import by.g_alex.ysmd_todo_compose.presentation.ui.theme.YSMDToDoComposeTheme
 
 @Composable
 fun PriorityDropDownMenu(
@@ -30,7 +31,6 @@ fun PriorityDropDownMenu(
             text = {
                 Text(
                     stringResource(R.string.todo_priority_none),
-                    color = ToDoTheme.colors.labelPrimary,
                     style = ToDoTheme.typography.support
                 )
             },
@@ -53,7 +53,6 @@ fun PriorityDropDownMenu(
             text = {
                 Text(
                     stringResource(R.string.todo_priority_low),
-                    color = ToDoTheme.colors.labelPrimary,
                     style = ToDoTheme.typography.support
                 )
             },
@@ -68,8 +67,10 @@ fun PriorityDropDownMenu(
 @Preview(name = "Priority DropDown Menu | Light")
 private fun PriorityDropDownMenuPreviewLight() {
     // Work only on Interactive mode of preview
-    ToDoTheme {
-        PriorityDropDownMenu(true, {}) {}
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            PriorityDropDownMenu(true, {}) {}
+        }
     }
 }
 
@@ -77,7 +78,9 @@ private fun PriorityDropDownMenuPreviewLight() {
 @Preview(name = "Priority DropDown Menu | Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun PriorityDropDownMenuPreviewDark() {
     // Work only on Interactive mode of preview
-    ToDoTheme {
-        PriorityDropDownMenu(true, {}) {}
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            PriorityDropDownMenu(true, {}) {}
+        }
     }
 }

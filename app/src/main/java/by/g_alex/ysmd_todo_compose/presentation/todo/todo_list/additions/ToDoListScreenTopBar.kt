@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import by.g_alex.ysmd_todo_compose.R
 import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
+import by.g_alex.ysmd_todo_compose.presentation.ui.theme.YSMDToDoComposeTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,12 +34,6 @@ fun ToDoListScreenTopBar(
     // Something like animation for elevation
     Surface(shadowElevation = (scrollBehavior.state.collapsedFraction * 40).dp) {
         LargeTopAppBar(
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = ToDoTheme.colors.backPrimary,
-                titleContentColor = ToDoTheme.colors.labelPrimary,
-                scrolledContainerColor = ToDoTheme.colors.backPrimary,
-                actionIconContentColor = ToDoTheme.colors.colorBlue
-            ),
             title = {
                 Column {
                     Text(
@@ -78,9 +73,11 @@ fun ToDoListScreenTopBar(
 @Composable
 @Preview(name = "ToDoList Top Bar")
 private fun ToDoTopBarPreview() {
-    ToDoTheme {
-        val t = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
-        ToDoListScreenTopBar(t, false, {}, {},0)
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            val t = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+            ToDoListScreenTopBar(t, false, {}, {}, 0)
+        }
     }
 }
 
@@ -88,8 +85,10 @@ private fun ToDoTopBarPreview() {
 @Composable
 @Preview(name = "ToDoList Top Bar", uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun ToDoTopBarPreviewDark() {
-    ToDoTheme {
-        val t = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
-        ToDoListScreenTopBar(t, true, {}, {},0)
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            val t = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+            ToDoListScreenTopBar(t, true, {}, {}, 0)
+        }
     }
 }

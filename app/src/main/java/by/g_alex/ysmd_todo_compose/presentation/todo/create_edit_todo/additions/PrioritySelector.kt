@@ -1,6 +1,7 @@
 package by.g_alex.ysmd_todo_compose.presentation.todo.create_edit_todo.additions
 
 import android.content.res.Configuration
+import android.graphics.Color
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -24,7 +25,9 @@ import androidx.compose.ui.unit.sp
 import by.g_alex.ysmd_todo_compose.R
 import by.g_alex.ysmd_todo_compose.data.additional.enums.ToDoPriority
 import by.g_alex.ysmd_todo_compose.presentation.todo.components.IconBeforeText
+import by.g_alex.ysmd_todo_compose.presentation.ui.theme.Black
 import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
+import by.g_alex.ysmd_todo_compose.presentation.ui.theme.YSMDToDoComposeTheme
 
 @Composable
 fun PrioritySelector(
@@ -43,7 +46,6 @@ fun PrioritySelector(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(ToDoTheme.colors.backPrimary)
             .padding(vertical = ToDoTheme.dp.listVerticalPadding)
             .clickable { expanded = true }
     ) {
@@ -79,15 +81,24 @@ fun PrioritySelector(
 @Composable
 @Preview(name = "Priority Selector | Light")
 private fun PrioritySelectorPreviewLight() {
-    ToDoTheme {
-        PrioritySelector(ToDoPriority.HIGH) {}
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            PrioritySelector(ToDoPriority.HIGH) {}
+        }
     }
 }
 
 @Composable
-@Preview(name = "Priority Selector | Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(
+    name = "Priority Selector | Dark",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    backgroundColor = Color.BLACK.toLong()
+)
 private fun PrioritySelectorPreviewDark() {
-    ToDoTheme {
-        PrioritySelector(ToDoPriority.HIGH) {}
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            PrioritySelector(ToDoPriority.HIGH) {}
+        }
     }
 }
