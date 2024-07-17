@@ -3,6 +3,8 @@ package by.g_alex.ysmd_todo_compose.presentation.todo.todo_list.additions
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,6 +31,7 @@ fun ToDoListScreenTopBar(
     showAll: Boolean,
     onShowClicked: () -> Unit,
     onAuthClick: () -> Unit,
+    onSettingsClick: () -> Unit,
     cnt: Int
 ) {
     // Something like animation for elevation
@@ -63,6 +66,12 @@ fun ToDoListScreenTopBar(
                         null
                     )
                 }
+                IconButton({ onSettingsClick() }) {
+                    Icon(
+                        Icons.Default.Settings,
+                        null
+                    )
+                }
             },
             scrollBehavior = scrollBehavior
         )
@@ -76,7 +85,7 @@ private fun ToDoTopBarPreview() {
     YSMDToDoComposeTheme {
         ToDoTheme {
             val t = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
-            ToDoListScreenTopBar(t, false, {}, {}, 0)
+            ToDoListScreenTopBar(t, false, {}, {}, {}, 0)
         }
     }
 }
@@ -88,7 +97,7 @@ private fun ToDoTopBarPreviewDark() {
     YSMDToDoComposeTheme {
         ToDoTheme {
             val t = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
-            ToDoListScreenTopBar(t, true, {}, {}, 0)
+            ToDoListScreenTopBar(t, true, {}, {}, {}, 0)
         }
     }
 }

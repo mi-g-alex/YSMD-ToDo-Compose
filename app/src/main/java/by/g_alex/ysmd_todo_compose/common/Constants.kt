@@ -14,4 +14,6 @@ object Constants {
     const val SHARED_AUTH2_TOKEN = "SHARED_AUTH2_TOKEN"
     const val SHARED_REVISION = "SHARED_REVISION"
     const val SHARED_OFFLINE_CHANGES = "SHARED_OFFLINE_CHANGES"
+
+    const val SHARED_THEME = "SHARED_THEME"
 }

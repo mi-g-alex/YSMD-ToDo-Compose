@@ -1,16 +1,21 @@
 package by.g_alex.ysmd_todo_compose.di
 
 import android.content.Context
+import android.content.res.Resources.Theme
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import by.g_alex.ysmd_todo_compose.common.Constants
 import by.g_alex.ysmd_todo_compose.data.repository.FakeFakeToDoRepositoryImpl
 import by.g_alex.ysmd_todo_compose.domain.repository.FakeToDoRepository
+import by.g_alex.ysmd_todo_compose.domain.use_case.theme_setting.ThemeEnum
+import by.g_alex.ysmd_todo_compose.domain.use_case.theme_setting.toMyString
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,6 +31,12 @@ class AppModule {
 
     @Singleton
     class MyPreference @Inject constructor(@ApplicationContext context: Context) {
+
+        private val themeUpdateFlow = MutableSharedFlow<ThemeEnum>()
+
+        fun getThemeUpdate(): SharedFlow<ThemeEnum> = themeUpdateFlow
+
+        suspend fun publishThemeUpdate(theme: ThemeEnum) = themeUpdateFlow.emit(theme)
 
         private val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
 
@@ -89,19 +100,39 @@ class AppModule {
             return bearer + auth2
         }
 
+        /**
+         * Save last revision
+         * @param rev New revision version
+         */
         fun setRevision(rev: Int) {
             prefs.edit().putInt(Constants.SHARED_REVISION, rev).apply()
         }
 
+        /**
+         * @return Last saved revision
+         */
         fun getRevision(): Int =
             prefs.getInt(Constants.SHARED_REVISION, 0)
 
+        /**
+         * @param has Set offline changes flag
+         */
         fun setHasOfflineChanges(has: Boolean) {
             prefs.edit().putBoolean(Constants.SHARED_OFFLINE_CHANGES, has).apply()
         }
 
+        /**
+         * @return offline changes flag
+         */
         fun getHasOfflineChanges(): Boolean =
             prefs.getBoolean(Constants.SHARED_OFFLINE_CHANGES, false)
+
+        fun getTheme(): String =
+            prefs.getString(Constants.SHARED_THEME, "") ?: ""
+
+        fun setTheme(theme: ThemeEnum) {
+            prefs.edit().putString(Constants.SHARED_THEME, theme.toMyString()).apply()
+        }
 
     }
 

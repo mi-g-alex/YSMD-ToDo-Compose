@@ -29,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import by.g_alex.ysmd_todo_compose.R
@@ -126,6 +127,7 @@ fun DeadlinePicker(
             colors = SwitchDefaults.colors(
                 checkedTrackColor = ToDoTheme.colors.colorBlue,
                 uncheckedTrackColor = ToDoTheme.colors.backSecondary,
+                checkedThumbColor = Color.White
             )
         )
     }

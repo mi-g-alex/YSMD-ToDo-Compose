@@ -52,6 +52,7 @@ import by.g_alex.ysmd_todo_compose.presentation.ui.theme.YSMDToDoComposeTheme
 @Composable
 fun ToDoListScreen(
     navToEditAdd: (id: String?) -> Unit,
+    goToSettings: () -> Unit,
     viewModel: ToDoListViewModel
 ) {
 
@@ -72,6 +73,7 @@ fun ToDoListScreen(
         authToken = state.value.authToken,
         authIsBearer = state.value.isBearerToken,
         saveToken = { t, b -> viewModel.saveAuthToken(t, b) },
+        goToSettings = goToSettings,
         refreshPage = { viewModel.getAllToDos() }
     )
 }
@@ -89,7 +91,8 @@ fun ToDoScreenContext(
     authToken: String,
     authIsBearer: Boolean?,
     saveToken: (token: String?, isBearer: Boolean?) -> Unit,
-    refreshPage: () -> Unit
+    goToSettings: () -> Unit,
+    refreshPage: () -> Unit,
 ) {
 
     var showAll by remember { mutableStateOf(true) }
@@ -123,6 +126,7 @@ fun ToDoScreenContext(
                 showAll,
                 { showAll = !showAll },
                 { showAuthDialog = true },
+                goToSettings,
                 cnt
             )
         },
@@ -219,7 +223,8 @@ private fun ListPreview() {
                 authToken = "",
                 authIsBearer = true,
                 saveToken = { _, _ -> },
-                refreshPage = {}
+                refreshPage = {},
+                goToSettings = {}
             )
         }
     }
@@ -243,7 +248,9 @@ private fun ListPreviewDark() {
                 authToken = "",
                 authIsBearer = true,
                 saveToken = { _, _ -> },
-                refreshPage = {})
+                refreshPage = {},
+                goToSettings = {}
+            )
         }
     }
 }
