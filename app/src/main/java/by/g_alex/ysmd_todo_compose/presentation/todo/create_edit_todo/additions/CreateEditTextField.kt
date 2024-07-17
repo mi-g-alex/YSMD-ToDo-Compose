@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -32,7 +33,13 @@ fun CreateEditTextField(
             unfocusedContainerColor = ToDoTheme.colors.backSecondary,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            cursorColor = ToDoTheme.colors.labelSecondary
+            cursorColor = ToDoTheme.colors.labelSecondary,
+            focusedLabelColor = ToDoTheme.colors.colorBlue,
+            unfocusedLabelColor = ToDoTheme.colors.colorBlue,
+            textSelectionColors = TextSelectionColors(
+                ToDoTheme.colors.colorBlue,
+                ToDoTheme.colors.colorBlue.copy(alpha = 0.5f)
+            ),
         ),
         label = {
             Text(

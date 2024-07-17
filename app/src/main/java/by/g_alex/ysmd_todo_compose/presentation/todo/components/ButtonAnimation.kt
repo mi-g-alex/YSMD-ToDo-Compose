@@ -21,7 +21,7 @@ enum class ButtonState { Pressed, Idle }
  * Bounce animation on click
  * Default scale = 0.9f
  */
-fun Modifier.bounceClick() = bounceClick(0.9f, 0.9f)
+fun Modifier.bounceClick(onClick: () -> Unit = {}) = bounceClick(0.9f, 0.9f, onClick)
 
 
 /**
@@ -29,7 +29,7 @@ fun Modifier.bounceClick() = bounceClick(0.9f, 0.9f)
  *
  * @param scale scale of button on click on X and Y. Min 0.1f
  */
-fun Modifier.bounceClick(@FloatRange(0.1) scale: Float) = bounceClick(scale, scale)
+fun Modifier.bounceClick(@FloatRange(0.1) scale: Float, onClick: () -> Unit = {}) = bounceClick(scale, scale, onClick)
 
 /**
  * Bounce animation on click
@@ -40,7 +40,9 @@ fun Modifier.bounceClick(@FloatRange(0.1) scale: Float) = bounceClick(scale, sca
 
 fun Modifier.bounceClick(
     @FloatRange(0.1) scaleToX: Float,
-    @FloatRange(0.1) scaleToY: Float) =
+    @FloatRange(0.1) scaleToY: Float,
+    onClick: () -> Unit = {}
+) =
     composed {
         var buttonState by remember { mutableStateOf(ButtonState.Idle) }
         val scaleStateX by animateFloatAsState(
@@ -60,7 +62,7 @@ fun Modifier.bounceClick(
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
-                onClick = { }
+                onClick = { onClick() }
             )
             .pointerInput(buttonState) {
                 awaitPointerEventScope {

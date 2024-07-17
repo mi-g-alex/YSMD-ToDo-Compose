@@ -89,8 +89,7 @@ private fun SettingElement(
     Row(
         Modifier
             .fillMaxWidth()
-            .bounceClick()
-            .clickable { onClick() }
+            .bounceClick { onClick() }
             .padding(ToDoTheme.dp.listHorizontalPadding),
         verticalAlignment = Alignment.CenterVertically
     ) {
