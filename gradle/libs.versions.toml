@@ -1,5 +1,6 @@
 [versions]
 agp = "8.5.1"
+div = "30.9.0"
 gson = "2.11.0"
 hiltAndroid = "2.51.1"
 hiltCompiler = "1.2.0"
@@ -22,6 +23,8 @@ workRuntimeKtx = "2.9.0"
 androidGradlePlugin = "8.2.2"
 coroutines = "1.7.3"
 ktor = "2.3.12"
+coordinatorlayout = "1.2.0"
+material = "1.12.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -33,6 +36,13 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+div = { module = "com.yandex.div:div", version.ref = "div" }
+div-core = { module = "com.yandex.div:div-core", version.ref = "div" }
+div-json = { module = "com.yandex.div:div-json", version.ref = "div" }
+div-rive = { module = "com.yandex.div:div-rive", version.ref = "div" }
+div-zoom = { module = "com.yandex.div:div-pinch-to-zoom", version.ref = "div" }
+div-picasso = { module = "com.yandex.div:picasso", version.ref = "div" }
+div-utils = { module = "com.yandex.div:utils", version.ref = "div" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
@@ -61,6 +71,8 @@ kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-pl
 kotlin-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 ktor-client = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
+androidx-coordinatorlayout = { group = "androidx.coordinatorlayout", name = "coordinatorlayout", version.ref = "coordinatorlayout" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 
 [plugins]

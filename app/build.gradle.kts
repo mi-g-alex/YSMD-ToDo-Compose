@@ -4,6 +4,7 @@ plugins {
     id("todo.networkLib")
     id("todo.composeLib")
     id("todo.roomLib")
+    id("todo.divKitLib")
     id("validator")
     id("telegram-reporter")
     alias(libs.plugins.compose.compiler)
@@ -45,6 +46,8 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.coordinatorlayout)
+    implementation(libs.material)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

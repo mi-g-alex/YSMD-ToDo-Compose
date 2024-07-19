@@ -32,6 +32,10 @@ gradlePlugin {
             id = "todo.composeLib"
             implementationClass = "ComposeConventionPlugin"
         }
+        register("divKitLibrary") {
+            id = "todo.divKitLib"
+            implementationClass = "DivKitConventionPlugin"
+        }
         register("validator") {
             id = "validator"
             implementationClass = "by.g_alex.ysmd_todo_compose.tasks.telegram.TelegramReporterPlugin"
