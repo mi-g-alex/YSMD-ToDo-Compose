@@ -3,7 +3,7 @@
 
     <style name="Theme.YSMDToDoCompose" parent="android:Theme.Material.Light.NoActionBar" />
 
-    <style name="Theme.YSMDToDoCompose.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.YSMDToDoCompose.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar" />
 
     <style name="Theme.YSMDToDoCompose.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

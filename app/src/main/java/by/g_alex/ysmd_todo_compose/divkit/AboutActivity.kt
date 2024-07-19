@@ -13,7 +13,7 @@ import com.yandex.div.zoom.DivPinchToZoomConfiguration
 import com.yandex.div.zoom.DivPinchToZoomExtensionHandler
 import okhttp3.OkHttpClient
 
-class MainPageActivity : AppCompatActivity() {
+class AboutActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainPageBinding
     private val assetReader = AssetReader(this)
@@ -27,7 +27,7 @@ class MainPageActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         binding.toolbarLayout.title = title
 
-        val divJson = assetReader.read("sample.json")
+        val divJson = assetReader.read("about.json")
         val templatesJson = divJson.optJSONObject("templates")
         val cardJson = divJson.getJSONObject("card")
 
@@ -43,13 +43,18 @@ class MainPageActivity : AppCompatActivity() {
 
     private fun createDivConfiguration(): DivConfiguration {
         return DivConfiguration.Builder(PicassoDivImageLoader(this))
-            .actionHandler(SampleDivActionHandler())
+            .actionHandler(SampleDivActionHandler { super.onBackPressedDispatcher.onBackPressed() })
             .extension(
                 DivPinchToZoomExtensionHandler(
                     DivPinchToZoomConfiguration.Builder(this).build()
                 )
             )
-            .divCustomContainerViewAdapter(RiveCustomViewAdapter.Builder(this, OkHttpDivRiveNetworkDelegate(OkHttpClient.Builder().build())).build())
+            .divCustomContainerViewAdapter(
+                RiveCustomViewAdapter.Builder(
+                    this,
+                    OkHttpDivRiveNetworkDelegate(OkHttpClient.Builder().build())
+                ).build()
+            )
             .visualErrorsEnabled(true)
             .build()
     }
