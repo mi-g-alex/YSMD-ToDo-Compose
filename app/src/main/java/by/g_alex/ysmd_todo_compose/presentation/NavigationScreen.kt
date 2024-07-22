@@ -13,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import by.g_alex.ysmd_todo_compose.presentation.settings.SettingsScreen
 import by.g_alex.ysmd_todo_compose.presentation.todo.create_edit_todo.CreateEditToDoScreen
 import by.g_alex.ysmd_todo_compose.presentation.todo.create_edit_todo.CreateEditToDoViewModel
 import by.g_alex.ysmd_todo_compose.presentation.todo.todo_list.ToDoListScreen
@@ -22,6 +23,7 @@ object Routes {
     const val MAIN_ROUTE = "MAIN_ROUTE"
     const val MAIN_SCREEN = "MAIN_SCREEN"
     const val EDIT_CREATE_SCREEN = "EDIT_CREATE_SCREEN/{id}"
+    const val SETTINGS_SCREEN = "SETTINGS_SCREEN"
 }
 
 @Composable
@@ -69,7 +71,10 @@ fun NavigationScreen(
                             )
                         )
                     },
-                    viewModel
+                    goToSettings = {
+                        navController.navigate(Routes.SETTINGS_SCREEN)
+                    },
+                    viewModel = viewModel
                 )
             }
 
@@ -84,6 +89,16 @@ fun NavigationScreen(
                 CreateEditToDoScreen(
                     goBack = { navController.navigateUp() },
                     viewModel = viewModel
+                )
+            }
+
+            composable(
+                route = Routes.SETTINGS_SCREEN,
+                enterTransition = { enter },
+                exitTransition = { out }
+            ) {
+                SettingsScreen(
+                    onBackClicked = { navController.navigateUp() },
                 )
             }
         }

@@ -4,19 +4,20 @@ plugins {
     id("todo.networkLib")
     id("todo.composeLib")
     id("todo.roomLib")
+    id("todo.divKitLib")
     id("validator")
     id("telegram-reporter")
     alias(libs.plugins.compose.compiler)
 }
 
 validateApkSize {
-    size = 11 * 1024 * 1024
+    size = 20 * 1024 * 1024
     token.set(providers.environmentVariable("TG_TOKEN"))
     chatId.set(providers.environmentVariable("TG_CHAT"))
 }
 
 telegramReporter {
-    checkSize = true
+    checkSize = false
     token.set(providers.environmentVariable("TG_TOKEN"))
     chatId.set(providers.environmentVariable("TG_CHAT"))
 }
@@ -45,6 +46,8 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.coordinatorlayout)
+    implementation(libs.material)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

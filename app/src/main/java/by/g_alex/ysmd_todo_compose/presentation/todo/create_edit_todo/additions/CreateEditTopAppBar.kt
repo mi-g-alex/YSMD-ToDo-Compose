@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import by.g_alex.ysmd_todo_compose.R
 import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
+import by.g_alex.ysmd_todo_compose.presentation.ui.theme.YSMDToDoComposeTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,43 +53,45 @@ fun CreateEditTopAppBar(
                 )
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = ToDoTheme.colors.backPrimary,
-            titleContentColor = ToDoTheme.colors.labelPrimary,
-            scrolledContainerColor = ToDoTheme.colors.backPrimary,
-            actionIconContentColor = ToDoTheme.colors.colorBlue,
-        ),
     )
 }
 
 @Composable
 @Preview(name = "Edit Top Bar | Light | Can't save")
 private fun CreateEditTopAppBarPreviewLight() {
-    ToDoTheme {
-        CreateEditTopAppBar({}, {}, false)
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            CreateEditTopAppBar({}, {}, false)
+        }
     }
 }
 
 @Composable
 @Preview(name = "Edit Top Bar | Dark | Can't save", uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun CreateEditTopAppBarPreviewDark() {
-    ToDoTheme {
-        CreateEditTopAppBar({}, {}, false)
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            CreateEditTopAppBar({}, {}, false)
+        }
     }
 }
 
 @Composable
 @Preview(name = "Edit Top Bar | Light | Can save")
 private fun CreateEditTopAppBarPreviewLightCanSave() {
-    ToDoTheme {
-        CreateEditTopAppBar({}, {}, true)
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            CreateEditTopAppBar({}, {}, true)
+        }
     }
 }
 
 @Composable
 @Preview(name = "Edit Top Bar | Dark | Can save", uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun CreateEditTopAppBarPreviewDarkCanSave() {
-    ToDoTheme {
-        CreateEditTopAppBar({}, {}, true)
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            CreateEditTopAppBar({}, {}, true)
+        }
     }
 }

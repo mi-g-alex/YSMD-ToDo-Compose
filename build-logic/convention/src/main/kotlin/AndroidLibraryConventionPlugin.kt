@@ -17,6 +17,10 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
 
                 compileSdkVersion(Versions.compileSdk)
 
+                buildFeatures.apply {
+                    viewBinding = true
+                }
+
                 defaultConfig {
                     applicationId = "by.g_alex.ysmd_todo_compose"
 

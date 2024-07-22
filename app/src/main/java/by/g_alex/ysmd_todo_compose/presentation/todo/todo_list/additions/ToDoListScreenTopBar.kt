@@ -1,8 +1,13 @@
 package by.g_alex.ysmd_todo_compose.presentation.todo.todo_list.additions
 
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -13,13 +18,16 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import by.g_alex.ysmd_todo_compose.R
+import by.g_alex.ysmd_todo_compose.divkit.AboutActivity
 import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
+import by.g_alex.ysmd_todo_compose.presentation.ui.theme.YSMDToDoComposeTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,17 +36,15 @@ fun ToDoListScreenTopBar(
     showAll: Boolean,
     onShowClicked: () -> Unit,
     onAuthClick: () -> Unit,
+    onSettingsClick: () -> Unit,
     cnt: Int
 ) {
+
+    val ctx = LocalContext.current
+
     // Something like animation for elevation
     Surface(shadowElevation = (scrollBehavior.state.collapsedFraction * 40).dp) {
         LargeTopAppBar(
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = ToDoTheme.colors.backPrimary,
-                titleContentColor = ToDoTheme.colors.labelPrimary,
-                scrolledContainerColor = ToDoTheme.colors.backPrimary,
-                actionIconContentColor = ToDoTheme.colors.colorBlue
-            ),
             title = {
                 Column {
                     Text(
@@ -68,6 +74,23 @@ fun ToDoListScreenTopBar(
                         null
                     )
                 }
+                IconButton({ onSettingsClick() }) {
+                    Icon(
+                        Icons.Default.Settings,
+                        null
+                    )
+                }
+                IconButton(
+                    onClick = {
+                        val a = Intent(ctx, AboutActivity::class.java)
+                        ctx.startActivity(a)
+                    }
+                ) {
+                    Icon(
+                        Icons.Outlined.Info,
+                        null
+                    )
+                }
             },
             scrollBehavior = scrollBehavior
         )
@@ -78,9 +101,11 @@ fun ToDoListScreenTopBar(
 @Composable
 @Preview(name = "ToDoList Top Bar")
 private fun ToDoTopBarPreview() {
-    ToDoTheme {
-        val t = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
-        ToDoListScreenTopBar(t, false, {}, {},0)
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            val t = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+            ToDoListScreenTopBar(t, false, {}, {}, {}, 0)
+        }
     }
 }
 
@@ -88,8 +113,10 @@ private fun ToDoTopBarPreview() {
 @Composable
 @Preview(name = "ToDoList Top Bar", uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun ToDoTopBarPreviewDark() {
-    ToDoTheme {
-        val t = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
-        ToDoListScreenTopBar(t, true, {}, {},0)
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            val t = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+            ToDoListScreenTopBar(t, true, {}, {}, {}, 0)
+        }
     }
 }

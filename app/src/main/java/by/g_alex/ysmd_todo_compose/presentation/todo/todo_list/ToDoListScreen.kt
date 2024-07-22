@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -46,10 +47,12 @@ import by.g_alex.ysmd_todo_compose.presentation.todo.todo_list.additions.ToDoIte
 import by.g_alex.ysmd_todo_compose.presentation.todo.todo_list.additions.ToDoListScreenFAB
 import by.g_alex.ysmd_todo_compose.presentation.todo.todo_list.additions.ToDoListScreenTopBar
 import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
+import by.g_alex.ysmd_todo_compose.presentation.ui.theme.YSMDToDoComposeTheme
 
 @Composable
 fun ToDoListScreen(
     navToEditAdd: (id: String?) -> Unit,
+    goToSettings: () -> Unit,
     viewModel: ToDoListViewModel
 ) {
 
@@ -62,7 +65,6 @@ fun ToDoListScreen(
     ToDoScreenContext(
         list = list,
         isLoading = state.value.isLoading,
-        isNetworkAvailable = state.value.isNetworkAvailble,
         error = state.value.isError,
         cnt = cnt,
         navToEditAdd = navToEditAdd,
@@ -71,6 +73,7 @@ fun ToDoListScreen(
         authToken = state.value.authToken,
         authIsBearer = state.value.isBearerToken,
         saveToken = { t, b -> viewModel.saveAuthToken(t, b) },
+        goToSettings = goToSettings,
         refreshPage = { viewModel.getAllToDos() }
     )
 }
@@ -80,7 +83,6 @@ fun ToDoListScreen(
 fun ToDoScreenContext(
     list: List<ToDoItemModel>,
     isLoading: Boolean,
-    isNetworkAvailable: Boolean,
     @StringRes error: Int?,
     cnt: Int,
     navToEditAdd: (id: String?) -> Unit,
@@ -89,7 +91,8 @@ fun ToDoScreenContext(
     authToken: String,
     authIsBearer: Boolean?,
     saveToken: (token: String?, isBearer: Boolean?) -> Unit,
-    refreshPage: () -> Unit
+    goToSettings: () -> Unit,
+    refreshPage: () -> Unit,
 ) {
 
     var showAll by remember { mutableStateOf(true) }
@@ -123,6 +126,7 @@ fun ToDoScreenContext(
                 showAll,
                 { showAll = !showAll },
                 { showAuthDialog = true },
+                goToSettings,
                 cnt
             )
         },
@@ -133,8 +137,7 @@ fun ToDoScreenContext(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(pad)
-                .background(ToDoTheme.colors.backPrimary),
+                .padding(pad),
         ) {
 
             if (isLoading) {
@@ -207,21 +210,23 @@ fun ToDoScreenContext(
 @Composable
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, name = "List on light theme")
 private fun ListPreview() {
-    ToDoTheme {
-        ToDoScreenContext(
-            emptyList(),
-            isLoading = false,
-            isNetworkAvailable = false,
-            error = null,
-            cnt = 5,
-            navToEditAdd = {},
-            onCompleteClicked = { _, _ -> },
-            onDeleteClicked = {},
-            authToken = "",
-            authIsBearer = true,
-            saveToken = { _, _ -> },
-            refreshPage = {}
-        )
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            ToDoScreenContext(
+                emptyList(),
+                isLoading = true,
+                error = null,
+                cnt = 5,
+                navToEditAdd = {},
+                onCompleteClicked = { _, _ -> },
+                onDeleteClicked = {},
+                authToken = "",
+                authIsBearer = true,
+                saveToken = { _, _ -> },
+                refreshPage = {},
+                goToSettings = {}
+            )
+        }
     }
 }
 
@@ -230,19 +235,22 @@ private fun ListPreview() {
 @Composable
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, name = "List on dark theme")
 private fun ListPreviewDark() {
-    ToDoTheme {
-        ToDoScreenContext(
-            listHardCoded,
-            isLoading = false,
-            error = null,
-            isNetworkAvailable = true,
-            cnt = 5,
-            navToEditAdd = {},
-            onCompleteClicked = { _, _ -> },
-            onDeleteClicked = {},
-            authToken = "",
-            authIsBearer = true,
-            saveToken = { _, _ -> },
-            refreshPage = {})
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            ToDoScreenContext(
+                listHardCoded,
+                isLoading = false,
+                error = null,
+                cnt = 5,
+                navToEditAdd = {},
+                onCompleteClicked = { _, _ -> },
+                onDeleteClicked = {},
+                authToken = "",
+                authIsBearer = true,
+                saveToken = { _, _ -> },
+                refreshPage = {},
+                goToSettings = {}
+            )
+        }
     }
 }

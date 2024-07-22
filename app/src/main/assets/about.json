@@ -1,0 +1,232 @@
+{
+  "templates": {
+    "my_link": {
+      "type": "container",
+      "orientation": "horizontal",
+      "margins": {
+        "top": 8
+      },
+      "content_alignment_vertical": "center",
+      "content_alignment_horizontal": "start",
+      "items": [
+        {
+          "type": "image",
+          "$image_url": "image_url",
+          "aspect": {
+            "ratio": 1
+          },
+          "width": {
+            "type": "match_parent",
+            "weight": 0.1
+          }
+        },
+        {
+          "type": "text",
+          "$text": "text",
+          "font_size": 15
+        }
+      ],
+      "action": {
+        "$url": "url",
+        "log_id": "tap_to_link"
+      }
+    }
+  },
+  "card": {
+    "log_id": "mi_g_alex_log",
+    "states": [
+      {
+        "state_id": 0,
+        "div": {
+          "type": "gallery",
+          "orientation": "vertical",
+          "height": {
+            "type": "match_parent"
+          },
+          "width": {
+            "type": "match_parent"
+          },
+          "items": [
+            {
+              "type": "container",
+              "orientation": "horizontal",
+              "content_alignment_horizontal": "center",
+              "content_alignment_vertical": "center",
+              "margins": {
+                "top": 40
+              },
+              "width": {
+                "type": "match_parent"
+              },
+              "items": [
+                {
+                  "type": "image",
+                  "image_url": "https://icon-library.com/images/todo-list-icon_6181.png",
+                  "aspect": {
+                    "ratio": 1
+                  },
+                  "width": {
+                    "value": 70,
+                    "unit": "dp",
+                    "type": "fixed"
+                  }
+                },
+                {
+                  "type": "text",
+                  "text": "What ToDoApp",
+                  "width": {
+                    "type": "wrap_content"
+                  },
+                  "font_size": 35
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "orientation": "horizontal",
+              "width": {
+                "type": "wrap_content"
+              },
+              "alignment_horizontal": "center",
+              "content_alignment_vertical": "center",
+              "content_alignment_horizontal": "space-around",
+              "items": [
+                {
+                  "type": "text",
+                  "text": "Try tap like",
+                  "width": {
+                    "type": "wrap_content"
+                  },
+                  "margins": {
+                    "end": 15
+                  },
+                  "font_size": 25
+                },
+                {
+                  "type": "state",
+                  "id": "like_state",
+                  "width": {
+                    "type": "wrap_content"
+                  },
+                  "height": {
+                    "type": "wrap_content"
+                  },
+                  "states": [
+                    {
+                      "state_id": "not_liked",
+                      "div": {
+                        "type": "image",
+                        "image_url": "https://yastatic.net/s3/home/divkit/heart_empty.svg",
+                        "width": {
+                          "type": "fixed",
+                          "value": 30,
+                          "unit": "dp"
+                        },
+                        "actions": [
+                          {
+                            "log_id": "cup.set_liked",
+                            "url": "div-action://set_state?state_id=0/like_state/liked"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "state_id": "liked",
+                      "div": {
+                        "type": "image",
+                        "image_url": "https://yastatic.net/s3/home/divkit/heart_empty.svg",
+                        "tint_color": "#f00",
+                        "tint_mode": "multiply",
+                        "width": {
+                          "type": "fixed",
+                          "value": 30,
+                          "unit": "dp"
+                        },
+                        "actions": [
+                          {
+                            "log_id": "cup.set_liked",
+                            "url": "div-action://set_state?state_id=0/like_state/not_liked"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "orientation": "vertical",
+              "margins": {
+                "top": 25,
+                "start": 30,
+                "end": 30
+              },
+              "items": [
+                {
+                  "type": "text",
+                  "text": "About",
+                  "font_size": 25,
+                  "text_color": "#777"
+                },
+                {
+                  "type": "text",
+                  "text": "It is page about \"What ToDo App\".\n\nDeveloper of this app: G_Alex\n\nCustomer: YMDS\n\nGoal of creating this page - creating pages using DivKit.",
+                  "font_size": 20
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "orientation": "vertical",
+              "margins": {
+                "top": 25,
+                "start": 30,
+                "end": 30
+              },
+              "items": [
+                {
+                  "type": "text",
+                  "text": "My Links",
+                  "font_size": 25,
+                  "text_color": "#777"
+                },
+                {
+                  "type": "my_link",
+                  "url": "my-action://go-to?https://mi_g_alex.t.me",
+                  "text": "Telegram",
+                  "image_url": "https://dossodossi.com/Themes/Voyage/Content/img/telegram/Telegram_(software)-Logo.wine.png"
+                },
+                {
+                  "type": "my_link",
+                  "url": "my-action://go-to?https://github.com/mi-g-alex/YSMD-ToDo-Compose/",
+                  "text": "GitHub",
+                  "image_url": "https://www.shareicon.net/download/2015/08/10/82884_github_4096x4096.png"
+                },
+                {
+                  "type": "my_link",
+                  "url": "my-action://go-to?https://play.google.com/store/apps/dev?id=5271579109955226538",
+                  "text": "Play Store",
+                  "image_url": "https://cdn3.iconfinder.com/data/icons/logos-and-brands-adobe/512/152_Google_Play-1024.png"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "text": "Go Back",
+              "font_size": 25,
+              "text_alignment_horizontal": "center",
+              "margins": {
+                "top": 15
+              },
+              "action": {
+                "url": "my-action://go-back",
+                "log_id": "GoBackLog"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

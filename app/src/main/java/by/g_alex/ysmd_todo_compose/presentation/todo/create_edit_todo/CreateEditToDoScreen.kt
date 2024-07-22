@@ -93,20 +93,17 @@ private fun CreateEditContent(
                 enabledSave = toDoText.isNotBlank()
             )
         },
-        modifier = Modifier.background(ToDoTheme.colors.backPrimary)
     ) { pad ->
 
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(pad)
-                .background(ToDoTheme.colors.backPrimary)
         ) {
 
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(ToDoTheme.colors.backPrimary)
                     .padding(horizontal = ToDoTheme.dp.listHorizontalPadding),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 contentPadding = PaddingValues(vertical = ToDoTheme.dp.listContentPadding)

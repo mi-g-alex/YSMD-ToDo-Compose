@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -14,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import by.g_alex.ysmd_todo_compose.R
 import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
+import by.g_alex.ysmd_todo_compose.presentation.ui.theme.YSMDToDoComposeTheme
 
 @Composable
 fun CreateEditTextField(
@@ -31,11 +33,13 @@ fun CreateEditTextField(
             unfocusedContainerColor = ToDoTheme.colors.backSecondary,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            focusedTextColor = ToDoTheme.colors.labelPrimary,
-            unfocusedTextColor = ToDoTheme.colors.labelPrimary,
-            focusedLabelColor = ToDoTheme.colors.labelSecondary,
-            unfocusedLabelColor = ToDoTheme.colors.labelSecondary,
-            cursorColor = ToDoTheme.colors.labelSecondary
+            cursorColor = ToDoTheme.colors.labelSecondary,
+            focusedLabelColor = ToDoTheme.colors.colorBlue,
+            unfocusedLabelColor = ToDoTheme.colors.colorBlue,
+            textSelectionColors = TextSelectionColors(
+                ToDoTheme.colors.colorBlue,
+                ToDoTheme.colors.colorBlue.copy(alpha = 0.5f)
+            ),
         ),
         label = {
             Text(
@@ -52,31 +56,39 @@ fun CreateEditTextField(
 @Composable
 @Preview(name = "EditTextField | Light | Without text")
 private fun CreateEditTextFieldPreviewLight() {
-    ToDoTheme {
-        CreateEditTextField("") {}
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            CreateEditTextField("") {}
+        }
     }
 }
 
 @Composable
 @Preview(name = "Edit Top Bar | Dark | Without text", uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun CreateEditTextFieldPreviewDark() {
-    ToDoTheme {
-        CreateEditTextField("") {}
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            CreateEditTextField("") {}
+        }
     }
 }
 
 @Composable
 @Preview(name = "Edit Top Bar | Light | Text")
 private fun CreateEditTextFieldPreviewLightText() {
-    ToDoTheme {
-        CreateEditTextField("Text") {}
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            CreateEditTextField("Text") {}
+        }
     }
 }
 
 @Composable
 @Preview(name = "Edit Top Bar | Dark | Text", uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun CreateEditTextFieldPreviewDarkText() {
-    ToDoTheme {
-        CreateEditTextField("Text") {}
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            CreateEditTextField("Text") {}
+        }
     }
 }

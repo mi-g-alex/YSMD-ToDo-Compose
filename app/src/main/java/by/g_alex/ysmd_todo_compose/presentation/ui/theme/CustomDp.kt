@@ -14,6 +14,7 @@ data class CustomDp(
     val shapeCorner: Dp,
     val titleStartPadding: Dp,
     val iconPadding: Dp,
+    val bottomSheetPadding: Dp,
 )
 
 internal val LocalCustomDp = staticCompositionLocalOf {
@@ -24,6 +25,7 @@ internal val LocalCustomDp = staticCompositionLocalOf {
         listContentPadding = 4.dp,
         shapeCorner = 8.dp,
         titleStartPadding = 45.dp,
-        iconPadding = 4.dp
+        iconPadding = 4.dp,
+        bottomSheetPadding = 16.dp
     )
 }

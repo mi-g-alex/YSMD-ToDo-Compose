@@ -29,11 +29,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import by.g_alex.ysmd_todo_compose.R
 import by.g_alex.ysmd_todo_compose.common.Constants.DATE_PICKER_DEFAULT_RANGE
 import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
+import by.g_alex.ysmd_todo_compose.presentation.ui.theme.YSMDToDoComposeTheme
 import by.g_alex.ysmd_todo_compose.presentation.utils.dateToString
 import java.util.Calendar
 import java.util.Date
@@ -125,6 +127,7 @@ fun DeadlinePicker(
             colors = SwitchDefaults.colors(
                 checkedTrackColor = ToDoTheme.colors.colorBlue,
                 uncheckedTrackColor = ToDoTheme.colors.backSecondary,
+                checkedThumbColor = Color.White
             )
         )
     }
@@ -132,18 +135,11 @@ fun DeadlinePicker(
     HorizontalDivider(modifier = Modifier.fillMaxWidth())
 
     val dpColors = DatePickerDefaults.colors(
-        containerColor = ToDoTheme.colors.backSecondary,
         selectedDayContainerColor = ToDoTheme.colors.colorBlue,
-        dayContentColor = ToDoTheme.colors.labelSecondary,
         currentYearContentColor = ToDoTheme.colors.labelPrimary,
         todayDateBorderColor = ToDoTheme.colors.colorBlue,
         yearContentColor = ToDoTheme.colors.labelSecondary,
         selectedYearContainerColor = ToDoTheme.colors.colorBlue,
-        titleContentColor = ToDoTheme.colors.labelSecondary,
-        selectedDayContentColor = ToDoTheme.colors.labelPrimary,
-        headlineContentColor = ToDoTheme.colors.labelPrimary,
-        weekdayContentColor = ToDoTheme.colors.labelTertiary,
-        navigationContentColor = ToDoTheme.colors.labelSecondary,
         todayContentColor = ToDoTheme.colors.labelPrimary
     )
 
@@ -171,8 +167,10 @@ fun DeadlinePicker(
 @Composable
 @Preview(name = "Deadline picker | Light")
 private fun DeadlinePickerPreviewLight() {
-    ToDoTheme {
-        DeadlinePicker(mutableStateOf(null)) {}
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            DeadlinePicker(mutableStateOf(null)) {}
+        }
     }
 }
 
@@ -180,8 +178,10 @@ private fun DeadlinePickerPreviewLight() {
 @Composable
 @Preview(name = "Deadline picker | Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun DeadlinePickerPreviewDark() {
-    ToDoTheme {
-        DeadlinePicker(mutableStateOf(null)) {}
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            DeadlinePicker(mutableStateOf(null)) {}
+        }
     }
 }
 
@@ -189,8 +189,10 @@ private fun DeadlinePickerPreviewDark() {
 @Composable
 @Preview(name = "Deadline picker | Light | Date")
 private fun DeadlinePickerPreviewLightWithDate() {
-    ToDoTheme {
-        DeadlinePicker(mutableStateOf(Calendar.getInstance().time)) {}
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            DeadlinePicker(mutableStateOf(Calendar.getInstance().time)) {}
+        }
     }
 }
 
@@ -198,7 +200,9 @@ private fun DeadlinePickerPreviewLightWithDate() {
 @Composable
 @Preview(name = "Deadline picker | Dark | Date", uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun DeadlinePickerPreviewDarkWithDate() {
-    ToDoTheme {
-        DeadlinePicker(mutableStateOf(Calendar.getInstance().time)) {}
+    YSMDToDoComposeTheme {
+        ToDoTheme {
+            DeadlinePicker(mutableStateOf(Calendar.getInstance().time)) {}
+        }
     }
 }
