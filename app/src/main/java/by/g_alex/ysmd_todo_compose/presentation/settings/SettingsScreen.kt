@@ -55,7 +55,7 @@ fun SettingsScreen(
                     IconButton({ onBackClicked() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = null,
+                            contentDescription = stringResource(R.string.todo_go_back),
                             tint = ToDoTheme.colors.labelPrimary
                         )
                     }

@@ -30,8 +30,8 @@ fun CreateEditTopAppBar(
         navigationIcon = {
             IconButton({ onBackClicked() }) {
                 Icon(
-                    Icons.Outlined.Close,
-                    null,
+                    imageVector = Icons.Outlined.Close,
+                    contentDescription = stringResource(R.string.todo_go_back),
                     tint = ToDoTheme.colors.labelPrimary
                 )
             }
