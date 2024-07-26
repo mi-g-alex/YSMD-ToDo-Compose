@@ -17,13 +17,13 @@
           },
           "width": {
             "type": "match_parent",
-            "weight": 0.1
+            "weight": 0.16
           }
         },
         {
           "type": "text",
           "$text": "text",
-          "font_size": 15
+          "font_size": 20
         }
       ],
       "action": {
@@ -119,8 +119,11 @@
                         "image_url": "https://yastatic.net/s3/home/divkit/heart_empty.svg",
                         "width": {
                           "type": "fixed",
-                          "value": 30,
+                          "value": 48,
                           "unit": "dp"
+                        },
+                        "accessibility": {
+                          "description": "Add like"
                         },
                         "actions": [
                           {
@@ -139,8 +142,11 @@
                         "tint_mode": "multiply",
                         "width": {
                           "type": "fixed",
-                          "value": 30,
+                          "value": 48,
                           "unit": "dp"
+                        },
+                        "accessibility": {
+                          "description": "Remove like"
                         },
                         "actions": [
                           {

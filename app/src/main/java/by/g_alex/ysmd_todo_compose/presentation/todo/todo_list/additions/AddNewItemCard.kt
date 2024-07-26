@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.sp
 import by.g_alex.ysmd_todo_compose.presentation.ui.theme.ToDoTheme
 
@@ -22,7 +23,8 @@ fun AddNewItemCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { navToEditAdd() },
+            .clickable { navToEditAdd() }
+            .semantics(mergeDescendants = true) {  },
         shape = RectangleShape,
         colors = CardDefaults.cardColors()
             .copy(containerColor = ToDoTheme.colors.backSecondary)
@@ -30,7 +32,7 @@ fun AddNewItemCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(ToDoTheme.dp.listContentPadding),
+                .padding(ToDoTheme.dp.listContentPadding).semantics(mergeDescendants = true) {  },
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically,
         ) {
