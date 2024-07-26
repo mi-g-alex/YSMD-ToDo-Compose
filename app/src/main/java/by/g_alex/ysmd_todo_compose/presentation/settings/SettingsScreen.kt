@@ -27,6 +27,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -86,11 +88,13 @@ private fun SettingElement(
     @StringRes label: Int,
     onClick: () -> Unit
 ) {
+    val text = stringResource(label)
     Row(
         Modifier
             .fillMaxWidth()
             .bounceClick { onClick() }
-            .padding(ToDoTheme.dp.listHorizontalPadding),
+            .padding(ToDoTheme.dp.listHorizontalPadding)
+            .semantics(mergeDescendants = true) {},
         verticalAlignment = Alignment.CenterVertically
     ) {
         RadioButton(
@@ -99,13 +103,16 @@ private fun SettingElement(
             modifier = Modifier.clickable(
                 remember { MutableInteractionSource() },
                 rememberRipple(false, 0.dp)
-            ) {},
+            ) {}
+                .semantics {
+                    stateDescription = if(selected)  "$text Selected" else "$text Not selected"
+                },
             colors = RadioButtonDefaults.colors().copy(
                 selectedColor = ToDoTheme.colors.colorBlue,
                 unselectedColor = ToDoTheme.colors.colorGray
             )
         )
-        Text(stringResource(label), style = ToDoTheme.typography.body)
+        Text(text, style = ToDoTheme.typography.body)
     }
 }
 

@@ -30,8 +30,8 @@
     <string name="auth_cancel">Cancel</string>
     <string name="auth_token_label">Auth Token</string>
     <string name="empty" />
-    <string name="theme_light">Light</string>
-    <string name="theme_dark">Dark</string>
-    <string name="theme_auto">Auto</string>
+    <string name="theme_light">Light theme</string>
+    <string name="theme_dark">Dark theme</string>
+    <string name="theme_auto">Match system theme</string>
     <string name="settings_title">Settings</string>
 </resources>
