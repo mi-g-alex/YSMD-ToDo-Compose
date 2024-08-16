@@ -11,13 +11,13 @@ plugins {
 }
 
 validateApkSize {
-    size = 20 * 1024 * 1024
+    size = 20 // providers.environmentVariable("APP_SIZE").get().toInt()
     token.set(providers.environmentVariable("TG_TOKEN"))
     chatId.set(providers.environmentVariable("TG_CHAT"))
 }
 
 telegramReporter {
-    checkSize = false
+    checkSize = false // providers.environmentVariable("CHECK_SIZE").get().toBoolean()
     token.set(providers.environmentVariable("TG_TOKEN"))
     chatId.set(providers.environmentVariable("TG_CHAT"))
 }

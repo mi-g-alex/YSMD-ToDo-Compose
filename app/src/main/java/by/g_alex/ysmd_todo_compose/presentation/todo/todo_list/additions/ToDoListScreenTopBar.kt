@@ -64,20 +64,20 @@ fun ToDoListScreenTopBar(
             actions = {
                 IconButton({ onShowClicked() }) {
                     Icon(
-                        painterResource(if (showAll) R.drawable.view_show else R.drawable.view_hide),
-                        null
+                        painter = painterResource(if (showAll) R.drawable.view_show else R.drawable.view_hide),
+                        contentDescription = stringResource(if (showAll) R.string.todo_hide_completed else R.string.todo_show_all)
                     )
                 }
                 IconButton({ onAuthClick() }) {
                     Icon(
-                        painterResource(R.drawable.icon_auth),
-                        null
+                        painter = painterResource(R.drawable.icon_auth),
+                        contentDescription = stringResource(R.string.auth_token_label)
                     )
                 }
                 IconButton({ onSettingsClick() }) {
                     Icon(
-                        Icons.Default.Settings,
-                        null
+                        imageVector = Icons.Default.Settings,
+                        contentDescription = stringResource(R.string.settings_title)
                     )
                 }
                 IconButton(
@@ -87,8 +87,8 @@ fun ToDoListScreenTopBar(
                     }
                 ) {
                     Icon(
-                        Icons.Outlined.Info,
-                        null
+                        imageVector = Icons.Outlined.Info,
+                        contentDescription = stringResource(R.string.todo_about_app)
                     )
                 }
             },
